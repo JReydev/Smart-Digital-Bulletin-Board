@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test - SmartBulletin</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="SmartBulletin">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SmartBulletin">
+    <meta name="description" content="Faculty of Computer and Management Sciences Bulletin Board System">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#7B0000">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#7B0000">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="./images/logo.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/logo.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="./images/logo.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/logo.png">
+    <link rel="shortcut icon" href="./images/logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 77, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 25px;
+                max-width: 100%;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .status {
+                padding: 15px;
+            }
+            
+            .status-item {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+                margin: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .status {
+                padding: 12px;
+            }
+            
+            .status-item {
+                padding: 6px;
+                font-size: 0.85em;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.85em;
+                margin: 6px;
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            .status-item {
+                font-size: 0.8em;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 3px solid #7B0000;
+        }
+        
+        h1 {
+            color: #7B0000;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .status {
+            background: rgba(123, 0, 0, 0.1);
+            border: 1px solid rgba(123, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .status-label {
+            font-weight: 600;
+        }
+        
+        .status-value {
+            color: #7B0000;
+            font-weight: 500;
+        }
+        
+        .btn {
+            background: #7B0000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #9B1000;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .install-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .install-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="./images/logo.png" alt="SmartBulletin Logo" class="logo">
+        <h1>SmartBulletin PWA Test</h1>
+        <p>This page tests the PWA functionality of your SmartBulletin system.</p>
+        
+        <div class="status">
+            <h3>PWA Status</h3>
+            <div class="status-item">
+                <span class="status-label">Service Worker:</span>
+                <span class="status-value" id="swStatus">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Manifest:</span>
+                <span class="status-value" id="manifestStatus">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Installable:</span>
+                <span class="status-value" id="installStatus">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Display Mode:</span>
+                <span class="status-value" id="displayMode">Checking...</span>
+            </div>
+        </div>
+        
+        <button id="installBtn" class="btn install-btn" style="display: none;">
+            <i class="fas fa-download"></i> Install App
+        </button>
+        
+        <button class="btn" onclick="window.location.href='./modules/homepage.php'">
+            Go to Homepage
+        </button>
+        
+        <button class="btn" onclick="window.location.href='./modules/view_bulletin.html'">
+            View Bulletin
+        </button>
+    </div>
+
+    <script>
+        // PWA Test Script
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        
+        // Check PWA status
+        function checkPWAStatus() {
+            // Service Worker Status
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        document.getElementById('swStatus').textContent = 'Active';
+                        document.getElementById('swStatus').style.color = '#4CAF50';
+                    } else {
+                        document.getElementById('swStatus').textContent = 'Not Registered';
+                        document.getElementById('swStatus').style.color = '#f44336';
+                    }
+                });
+            } else {
+                document.getElementById('swStatus').textContent = 'Not Supported';
+                document.getElementById('swStatus').style.color = '#f44336';
+            }
+            
+            // Manifest Status
+            fetch('./manifest.json')
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('manifestStatus').textContent = 'Loaded';
+                        document.getElementById('manifestStatus').style.color = '#4CAF50';
+                    } else {
+                        document.getElementById('manifestStatus').textContent = 'Not Found';
+                        document.getElementById('manifestStatus').style.color = '#f44336';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('manifestStatus').textContent = 'Error';
+                    document.getElementById('manifestStatus').style.color = '#f44336';
+                });
+            
+            // Install Status
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                document.getElementById('installStatus').textContent = 'Already Installed';
+                document.getElementById('installStatus').style.color = '#4CAF50';
+                installBtn.style.display = 'none';
+            } else {
+                document.getElementById('installStatus').textContent = 'Available';
+                document.getElementById('installStatus').style.color = '#FF9800';
+            }
+            
+            // Display Mode
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                document.getElementById('displayMode').textContent = 'Standalone';
+            } else if (window.matchMedia('(display-mode: fullscreen)').matches) {
+                document.getElementById('displayMode').textContent = 'Fullscreen';
+            } else {
+                document.getElementById('displayMode').textContent = 'Browser';
+            }
+        }
+        
+        // Install button functionality
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'inline-block';
+        });
+        
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            }
+        });
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registered successfully');
+                        checkPWAStatus();
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                        checkPWAStatus();
+                    });
+            });
+        } else {
+            checkPWAStatus();
+        }
+        
+        // Check status on load
+        window.addEventListener('load', checkPWAStatus);
+    </script>
+</body>
+</html>

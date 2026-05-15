@@ -1,0 +1,161 @@
+{
+  "name": "SmartBulletin - College of Computer Studies",
+  "short_name": "SmartBulletin",
+  "description": "Faculty of Computer and Management Sciences Bulletin Board System",
+  "version": "1.0.0",
+  "start_url": "./modules/homepage.php",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#7B0000",
+  "background_color": "#ffffff",
+  "scope": "./",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "utilities"],
+  "display_override": ["window-controls-overlay", "standalone"],
+  "id": "smartbulletin-pwa",
+  "icons": [
+    {
+      "src": "./images/logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "167x167",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./images/logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "SmartBulletin Dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Bulletin",
+      "short_name": "Bulletin",
+      "description": "View the digital bulletin board",
+      "url": "./modules/view_bulletin.html",
+      "icons": [
+        {
+          "src": "./images/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Calendar",
+      "short_name": "Calendar",
+      "description": "View upcoming events",
+      "url": "./modules/calendar/calendar.php",
+      "icons": [
+        {
+          "src": "./images/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Announcements",
+      "short_name": "Announcements",
+      "description": "View latest announcements",
+      "url": "./modules/announcement/announcement.php",
+      "icons": [
+        {
+          "src": "./images/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "capture_links": "new-client",
+  "file_handlers": [
+    {
+      "action": "./modules/homepage.php",
+      "accept": {
+        "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
+        "video/*": [".mp4", ".webm", ".ogg"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+smartbulletin",
+      "url": "./modules/homepage.php?action=%s"
+    }
+  ],
+  "share_target": {
+    "action": "./modules/announcement/add_announcement.php",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "media_files",
+          "accept": ["image/*", "video/*"]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SmartBulletin - Loading</title>
+    
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SmartBulletin">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-orientations" content="portrait">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #7B0000 0%, #9B1000 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .app-name {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .app-subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fade 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fade {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+        
+        /* iOS Safe Area Support */
+        @supports (padding: max(0px)) {
+            .splash-container {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+                padding-top: max(20px, env(safe-area-inset-top));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-container">
+        <img src="./images/logo.png" alt="SmartBulletin Logo" class="logo">
+        <h1 class="app-name">SmartBulletin</h1>
+        <p class="app-subtitle">College of Computer Studies</p>
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading...</p>
+    </div>
+    
+    <script>
+        // Redirect to login after splash screen
+        setTimeout(() => {
+            window.location.href = './modules/login/login.php';
+        }, 2000);
+    </script>
+</body>
+</html>
