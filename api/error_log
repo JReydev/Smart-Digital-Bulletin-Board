@@ -1,0 +1,440 @@
+[17-Sep-2025 02:53:49 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:54:24 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:55:24 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:56:24 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:57:24 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:58:03 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:59:04 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:59:31 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:59:46 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 02:59:51 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 03:48:03 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[17-Sep-2025 03:48:06 UTC] PHP Deprecated:  strtotime(): Passing null to parameter #1 ($datetime) of type string is deprecated in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 158
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:24:29 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:24:40 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:25:29 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:25:41 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:26:29 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:27:29 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:27:40 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:28:29 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:29:18 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:29:31 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:29:32 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:30:19 UTC] Smart Bulletin API: No output was generated, sending fallback response
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:30:56 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:30:59 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:31:04 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:31:07 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:31:09 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:31:15 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:31:16 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:32:05 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:33:04 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:33:13 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:33:24 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:33:25 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:34:13 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:35:14 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:36:14 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:37:14 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:38:14 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:39:14 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:40:31 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: Starting main execution
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: About to call mergeAllItems
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: About to call getWelcomeAndNews
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: About to call getFacultySpecializations
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: About to send JSON response
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: JSON length: 0
+[18-Sep-2025 12:41:31 UTC] Smart Bulletin API: JSON response sent successfully
+[18-Sep-2025 12:41:48 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:41:48 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:41:48 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:41:48 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:42:11 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:42:11 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:42:11 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:42:11 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:42:12 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:42:12 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:42:12 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:42:12 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:42:20 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:42:20 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:42:20 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:42:20 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:42:43 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:42:43 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:42:43 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:42:43 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:42:44 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:42:44 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:42:44 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:42:44 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:43:03 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:43:03 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:43:03 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:43:03 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:43:26 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:43:26 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:43:26 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:43:26 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:43:27 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:43:27 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:43:27 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:43:27 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:44:04 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:44:04 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:44:04 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:44:04 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:45:04 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:45:04 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:45:04 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:45:04 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:46:03 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:46:03 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:46:03 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:46:03 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:46:09 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:46:09 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:46:09 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:46:09 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:46:20 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:47:10 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:47:10 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:47:10 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:47:10 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:48:10 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:48:10 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:48:10 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:48:10 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:49:10 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:49:10 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:49:10 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:49:10 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:50:10 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:50:10 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:50:10 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:50:10 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:51:03 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:51:03 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:51:03 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:51:03 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:51:16 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:52:04 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:52:04 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:52:04 UTC] Smart Bulletin API: Simplified JSON length: 0
+[18-Sep-2025 12:52:04 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:52:11 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:52:11 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:52:11 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:52:11 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:52:34 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:53:12 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:53:12 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:53:12 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:53:12 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:53:40 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:53:40 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:53:40 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:53:40 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:54:41 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:54:41 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:54:41 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:54:41 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:55:41 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:55:41 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:55:41 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:55:41 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:56:00 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:56:00 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:56:00 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:56:00 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:57:01 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:57:01 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:57:01 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:57:01 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 12:58:01 UTC] Smart Bulletin API: Database connection included successfully
+[18-Sep-2025 12:58:01 UTC] Smart Bulletin API: Starting simplified execution
+[18-Sep-2025 12:58:01 UTC] Smart Bulletin API: Simplified JSON length: 628
+[18-Sep-2025 12:58:01 UTC] Smart Bulletin API: Simplified response sent successfully
+[18-Sep-2025 13:18:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function getFacultySpecializations() in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php:513
+Stack trace:
+#0 {main}
+  thrown in /home/dotr1ftpytvk/public_html/SmartBulletin/api/get_slides_data.php on line 513
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Starting API request
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Database connection included
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Starting main request processing
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Starting mergeAllItems
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting announcements
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Executing query for type: announcements
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting events
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Executing query for type: events
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Adding calendar slide
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting faculty members
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting officers
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] mergeAllItems completed successfully
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Items retrieved: 8
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting welcome and news
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Welcome and news completed successfully
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Welcome and news retrieved
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Getting faculty specializations
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Faculty specializations completed successfully, found 12 records
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Specializations retrieved: 12
+[18-Sep-2025 13:19:54 UTC] [get_slides_data.php] Response prepared successfully

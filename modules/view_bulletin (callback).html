@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bulletin Display</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Update Treant.js dependencies with more reliable CDN sources -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treant-js@1.0/Treant.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/css/perfect-scrollbar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/raphael@2.3.0/raphael.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/treant-js@1.0/Treant.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            color: white;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 77, 77, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 77, 77, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, rgba(255, 77, 77, 0.03) 0%, transparent 70%),
+                linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 80px 40px 40px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+            box-shadow: 0 0 40px rgba(255, 77, 77, 0.1);
+        }
+        .active {
+            display: flex;
+            opacity: 1;
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        h1, .announcement-card h2 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+        h1::after, .announcement-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+        }
+        p {
+            font-size: 1.8em;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .media {
+            max-height: 50vh;
+            max-width: 90%;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            object-fit: contain;
+        }
+        .media:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 77, 77, 0.3);
+        }
+        video.media {
+            max-height: 60vh;
+        }
+        /* Styles for officers and faculty hierarchy */
+        .members-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            margin: 0 auto;
+            padding: 60px 15px 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .member-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin: 0;
+            justify-items: center;
+            align-items: center;
+        }
+        /* Add a container for the title and member-row */
+        .members-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+        }
+        .members-content h1 {
+            margin-bottom: 30px;
+        }
+        .member-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 77, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            width: 180px;
+            text-align: center;
+            transition: all 0.4s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 20px rgba(255, 77, 77, 0.1);
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(255, 77, 77, 0.3);
+            border-color: rgba(255, 77, 77, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .member-name {
+            font-size: 1.1em;
+            color: #ff4d4d;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .member-position {
+            font-size: 0.9em;
+            color: #fff;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .member-description {
+            font-size: 0.85em;
+            color: #ccc;
+            font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            object-fit: cover;
+            border: 3px solid #ff4d4d;
+            box-shadow: 0 4px 16px rgba(255, 77, 77, 0.3);
+            transition: all 0.4s ease;
+        }
+        .member-card:hover .member-image {
+            transform: scale(1.08);
+            border-width: 4px;
+            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.4);
+        }
+        /* Calendar styles */
+        .calendar-container {
+            width: 60%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 77, 77, 0.15);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            margin: 70px auto 20px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+        .calendar-container:hover {
+            box-shadow: 0 12px 40px rgba(255, 77, 77, 0.25);
+            border-color: rgba(255, 77, 77, 0.3);
+            transform: translateY(-2px);
+        }
+        .calendar-header-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            font-size: 1.7em;
+            color: #ff4d4d;
+            text-shadow: 0 2px 4px rgba(255, 77, 77, 0.2);
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 77, 77, 0.1);
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 2px;
+        }
+        .calendar-header {
+            background: rgba(255, 77, 77, 0.2);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+            box-shadow: 0 2px 8px rgba(255, 77, 77, 0.1);
+        }
+        .calendar-day {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-weight: bold;
+            font-size: 15.5px;
+            height: 70px;
+            position: relative;
+            overflow: auto;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .calendar-day:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .day-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .event {
+            margin-top: 16px;
+            font-size: 14px;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            box-shadow: 0 2px 10px rgba(255, 77, 77, 0.1);
+        }
+        .event.event-type {
+            background: rgba(255, 77, 77, 0.8);
+            box-shadow: 0 3px 12px rgba(255, 77, 77, 0.25);
+        }
+        .event.event-type:hover {
+            background: rgba(255, 77, 77, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.35);
+        }
+        .event.event-type.multi-day {
+            border-radius: 0;
+            margin-right: 0;
+            margin-left: 0;
+            padding-right: 5px;
+            padding-left: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        .event.event-type.multi-day.start {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            margin-left: 5px;
+        }
+        .event.event-type.multi-day.end {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            margin-right: 5px;
+        }
+        .event.event-type.multi-day:not(.start):not(.end) {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+        .event.announcement-type {
+            background: rgba(255, 77, 77, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .event.announcement-type:hover {
+            background: rgba(255, 77, 77, 0.8);
+            transform: translateY(-2px);
+        }
+        .event-details {
+            font-size: 12px;
+            margin-top: 2px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        /* Custom Scrollbar */
+        .calendar-day::-webkit-scrollbar {
+            width: 4px;
+        }
+        .calendar-day::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .calendar-day::-webkit-scrollbar-thumb {
+            background: rgba(255, 77, 77, 0.5);
+            border-radius: 2px;
+        }
+        .calendar-day::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 77, 77, 0.8);
+        }
+        /* Navigation Controls */
+        .nav-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 77, 77, 0.1);
+            border: 2px solid rgba(255, 77, 77, 0.3);
+            color: #ff4d4d;
+            font-size: 2em;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(255, 77, 77, 0.15);
+            opacity: 0.6;
+        }
+        .nav-control:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+            background: rgba(255, 77, 77, 0.15);
+            box-shadow: 0 8px 30px rgba(255, 77, 77, 0.3);
+        }
+        #prevBtn {
+            left: 20px;
+        }
+        #nextBtn {
+            right: 20px;
+        }
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d4d, #ff8080);
+            width: 0%;
+            transition: width linear;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+            position: relative;
+            border-radius: 3px;
+        }
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.4) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+            border-radius: 3px;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        /* Slide Counter */
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            z-index: 100;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            letter-spacing: 1px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(255, 77, 77, 0.2);
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.2);
+        }
+        .slide-counter:hover {
+            border-color: rgba(255, 77, 77, 0.5);
+            box-shadow: 0 6px 25px rgba(255, 77, 77, 0.2);
+            transform: translateY(-2px);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        /* Loading Indicator */
+        .loading-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            z-index: 100;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            display: none;
+            animation: fadeInDown 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .loading-indicator.active {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .loading-indicator::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 77, 77, 0.3);
+            border-top-color: #ff4d4d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .college-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 18px 0;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(255, 77, 77, 0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #ff4d4d;
+            animation: headerGlow 4s infinite;
+            text-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+        }
+        @keyframes headerGlow {
+            0%, 100% { border-bottom-color: #ff4d4d; }
+            50% { border-bottom-color: #ff8080; }
+        }
+        /* Family Tree Styles */
+        .tree-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        .tree-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .org-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .org-level {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 40px 0 0 0;
+            position: relative;
+        }
+        .org-node {
+            background: #111;
+            border: 2px solid #fff;
+            color: #fff;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 0 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 0 3px #222;
+        }
+        .org-node img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            object-fit: cover;
+            border: 2px solid #ff4d4d;
+        }
+        /* Connectors */
+        .org-connector {
+            position: absolute;
+            background: #fff;
+            z-index: 1;
+        }
+        .org-connector.vertical {
+            width: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .org-connector.horizontal {
+            height: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .org-level {
+                flex-direction: column;
+                align-items: center;
+            }
+            .org-node {
+                margin: 20px 0;
+            }
+        }
+        /* Loading State */
+        .loading-state {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 1.6em;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #ff4d4d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Add styles for announcement groups */
+        .announcements-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .announcement-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 77, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: left;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.1);
+        }
+        .announcement-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.25);
+            border-color: rgba(255, 77, 77, 0.35);
+        }
+        .announcement-card h2 {
+            font-size: 1.8em;
+            color: #ff4d4d;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .announcement-card p {
+            font-size: 1.2em;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .announcement-card .media {
+            max-height: 40vh;
+            margin: 15px auto;
+        }
+        .announcement-card .date {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            position: relative;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: auto;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 77, 77, 0.1);
+            border: 2px solid rgba(255, 77, 77, 0.3);
+            color: #ff4d4d;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        .modal-close:hover {
+            background: rgba(255, 77, 77, 0.2);
+            transform: scale(1.1);
+        }
+        .modal-title {
+            font-size: 2em;
+            color: #ff4d4d;
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+        .modal-body {
+            color: #fff;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        .modal-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        .modal-button {
+            background: rgba(255, 77, 77, 0.1);
+            border: 2px solid rgba(255, 77, 77, 0.3);
+            color: #ff4d4d;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        .modal-button:hover {
+            background: rgba(255, 77, 77, 0.2);
+            transform: scale(1.05);
+        }
+        .modal-button.primary {
+            background: #ff4d4d;
+            color: white;
+        }
+        .modal-button.primary:hover {
+            background: #ff6666;
+        }
+        @media (max-width: 768px) {
+            .calendar-container {
+                width: 92%;
+                padding: 15px;
+                margin: 45px auto 15px;
+            }
+            .calendar-day {
+                height: 95px;
+                font-size: 13.5px;
+            }
+            .calendar-header {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .day-number {
+                font-size: 12px;
+            }
+            .event {
+                height: 30px;
+                font-size: 12px;
+            }
+        }
+        .announcement-date {
+            font-size: 1.2em !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+            margin: 15px 0 !important;
+            font-style: italic;
+        }
+        .announcement-date i {
+            margin-right: 8px;
+            color: #ff4d4d;
+        }
+        .media-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        /* Add CSS for no-animation slides */
+        .slide.no-animation {
+            animation: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="college-header">College of Computer Studies</div>
+    <div id="loadingState" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading bulletin content...</p>
+    </div>
+    <div id="slidesContainer" class="slides-container" style="display: none;">
+        <!-- Slides will be dynamically inserted here -->
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+    <div class="slide-counter">1 / 0</div>
+    <div class="loading-indicator">Updating content...</div>
+
+    <button id="prevBtn" class="nav-control" aria-label="Previous slide">&#10094;</button>
+    <button id="nextBtn" class="nav-control" aria-label="Next slide">&#10095;</button>
+
+    <script>
+        let slides = [];
+        let currentIndex = 0;
+        const delay = 10000; // 10 seconds per slide
+        const updateInterval = 60000; // Check for updates every minute
+        let slideInterval;
+        let progressInterval;
+
+        // Templates for different slide types
+        const templates = {
+            basic: (item) => `
+                <div class="slide${item.no_animation ? ' no-animation' : ''}">
+                    <h1>${escapeHtml(item.title)}</h1>
+                    <p>${escapeHtml(item.description)}</p>
+                    ${item.extra_info ? `<p class="announcement-date"><i class="fas fa-calendar-alt"></i> ${escapeHtml(item.extra_info)}</p>` : ''}
+                    ${item.file_path ? `
+                        <div class="media-container">
+                            ${renderMedia(item)}
+                        </div>
+                    ` : ''}
+                </div>
+            `,
+
+            announcements_group: (item) => `
+                <div class="slide">
+                    <div class="announcements-group">
+                        ${item.announcements.map(announcement => `
+                            <div class="announcement-card">
+                                <h2>${escapeHtml(announcement.title)}</h2>
+                                <p>${escapeHtml(announcement.description)}</p>
+                                ${announcement.date ? `<div class="date">${escapeHtml(announcement.date)}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `,
+
+            calendar: (item) => `
+                <div class="slide">
+                    <div class="calendar-container">
+                        <div class="calendar-header-title">${escapeHtml(item.title)}</div>
+                        <div class="calendar">
+                            ${renderCalendar(item)}
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            faculty: (item) => `
+                <div class="slide">
+                    <div class="members-container">
+                        <div class="members-content">
+                            <h1>${escapeHtml(item.title)}</h1>
+                            <div class="member-row">
+                                ${item.faculty.map(member => `
+                                    <div class="member-card">
+                                        ${member.file_path ? `
+                                            <img src="../Multimedia/faculty/${escapeHtml(basename(member.file_path))}" 
+                                                 class="member-image" 
+                                                 alt="${escapeHtml(member.title)}">
+                                        ` : ''}
+                                        <div class="member-name">${escapeHtml(member.title)}</div>
+                                        <div class="member-position">${escapeHtml(member.description)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            officers_tree: (item) => `
+                <div class="slide">
+                    <div class="tree-container">
+                        <h1>${escapeHtml(item.title)}</h1>
+                        <div class="org-tree">
+                            ${renderOrgTree(item.officers, item.adviser)}
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Add CSS for no-animation slides
+        const style = document.createElement('style');
+        style.textContent = `
+            .slide.no-animation {
+                animation: none !important;
+                transition: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Function to group slides by announcement_id
+        function groupSlides(slides) {
+            const groupedSlides = [];
+            let currentGroup = [];
+            let currentAnnouncementId = null;
+
+            slides.forEach(slide => {
+                if (slide.type === 'announcements') {
+                    if (currentAnnouncementId !== slide.announcement_id) {
+                        if (currentGroup.length > 0) {
+                            groupedSlides.push(...currentGroup);
+                        }
+                        currentGroup = [slide];
+                        currentAnnouncementId = slide.announcement_id;
+                    } else {
+                        currentGroup.push(slide);
+                    }
+                } else {
+                    if (currentGroup.length > 0) {
+                        groupedSlides.push(...currentGroup);
+                        currentGroup = [];
+                    }
+                    currentAnnouncementId = null;
+                    groupedSlides.push(slide);
+                }
+            });
+
+            if (currentGroup.length > 0) {
+                groupedSlides.push(...currentGroup);
+            }
+
+            return groupedSlides;
+        }
+
+        // Modify the loadSlides function to use groupSlides
+        async function loadSlides() {
+            try {
+                const response = await fetch('?check_updates=1');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    slides = groupSlides(data.data);
+                    if (slides.length > 0) {
+                        showSlide(currentIndex);
+                        startSlideshow();
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading slides:', error);
+            }
+        }
+
+        // Helper functions
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function basename(path) {
+            return path.split('/').pop();
+        }
+
+        function renderMedia(item) {
+            if (!item.file_path) return '';
+            
+            const ext = item.file_path.split('.').pop().toLowerCase();
+            const mediaPath = `../Multimedia/${item.type}/${basename(item.file_path)}`;
+
+            if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+                return `<img src="${escapeHtml(mediaPath)}" class="media" alt="Media">`;
+            } else if (['mp4', 'webm', 'ogg'].includes(ext)) {
+                return `
+                    <video class="media" autoplay muted loop>
+                        <source src="${escapeHtml(mediaPath)}" type="video/${ext}">
+                    </video>
+                `;
+            }
+            return '';
+        }
+
+        function renderCalendar(item) {
+            const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            let html = weekdays.map(day => `<div class="calendar-header">${day}</div>`).join('');
+
+            // Empty cells before first day
+            for (let i = 0; i < item.firstDayOfMonth; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            // Calendar days
+            for (let day = 1; day <= item.daysInMonth; day++) {
+                const dateKey = `${item.year}-${String(item.month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                html += `
+                    <div class="calendar-day">
+                        <span class="day-number">${day}</span>
+                        ${renderCalendarEvents(dateKey, item.events)}
+                    </div>
+                `;
+            }
+
+            // Fill remaining cells
+            const totalDisplayed = item.firstDayOfMonth + item.daysInMonth;
+            const remaining = (7 - (totalDisplayed % 7)) % 7;
+            for (let i = 0; i < remaining; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            return html;
+        }
+
+        function renderCalendarEvents(dateKey, events) {
+            if (!events[dateKey]) return '';
+            
+            return events[dateKey].map(event => {
+                const typeClass = `${event.type}-type`;
+                let multiDayClass = '';
+                
+                if (event.type === 'event' && event.duration > 1) {
+                    multiDayClass = 'multi-day';
+                    if (event.is_start) multiDayClass += ' start';
+                    if (event.is_end) multiDayClass += ' end';
+                }
+
+                return `
+                    <div class="event ${typeClass} ${multiDayClass}">
+                        ${event.is_start ? `
+                            ${escapeHtml(event.title)}
+                            ${event.type === 'event' && event.time ? `
+                                <div class="event-details">
+                                    ${new Date(`2000-01-01 ${event.time}`).toLocaleTimeString('en-US', {
+                                        hour: 'numeric',
+                                        minute: '2-digit',
+                                        hour12: true
+                                    }).toLowerCase()}
+                                    ${event.location ? ` - ${escapeHtml(event.location)}` : ''}
+                                </div>
+                            ` : ''}
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render the org chart based on the provided diagram
+        function renderOrgTree(officers, adviser) {
+            // Recursive search for all officers by multiple possible position names
+            function findAllByPositions(list, positions) {
+                let found = [];
+                for (const o of list) {
+                    if (positions.includes(o.description)) found.push(o);
+                    if (o.children && o.children.length) {
+                        found = found.concat(findAllByPositions(o.children, positions));
+                    }
+                }
+                return found;
+            }
+            // Adviser (from faculty)
+            let html = '';
+            if (adviser) {
+                html += `<div class=\"org-level\"><div class=\"org-node\">`;
+                if (adviser.file_path) {
+                    html += `<img src=\"../Multimedia/faculty/${escapeHtml(basename(adviser.file_path))}\" alt=\"${escapeHtml(adviser.title)}\">`;
+                }
+                html += `${escapeHtml(adviser.title || adviser.description)}</div></div>`;
+                html += `<div class=\"org-connector vertical\" style=\"height: 40px; top: 120px;\"></div>`;
+            }
+            // Helper to render all officers for a position
+            function renderNodes(nodes) {
+                return nodes.map(officer => `<div class=\"org-node\">${officer.file_path ? `<img src=\"../Multimedia/officers/${escapeHtml(basename(officer.file_path))}\" alt=\"${escapeHtml(officer.title)}\">` : ''}${escapeHtml(officer.title || officer.description)}</div>`).join('');
+            }
+            // President
+            const presidentNodes = findAllByPositions(officers, ['President']);
+            if (presidentNodes.length) {
+                html += `<div class=\"org-level\">${renderNodes(presidentNodes)}</div>`;
+                html += `<div class=\"org-connector vertical\" style=\"height: 40px; top: 240px;\"></div>`;
+            }
+            // Level 2: VP, Sec, Auditor, Treasurer
+            html += `<div class=\"org-level\">`
+                + renderNodes(findAllByPositions(officers, ['Vice President']))
+                + renderNodes(findAllByPositions(officers, ['Secretary']))
+                + renderNodes(findAllByPositions(officers, ['Auditor']))
+                + renderNodes(findAllByPositions(officers, ['Treasurer']))
+                + `</div>`;
+            html += `<div class=\"org-connector horizontal\" style=\"width: 500px; top: 340px; left: 50%; transform: translate(-50%, -50%);\"></div>`;
+            // Level 3: PRO Internal under VP/Sec, PRO External under Auditor/Treasurer
+            html += `<div class=\"org-level\">`
+                + renderNodes(findAllByPositions(officers, ['PRO Internal']))
+                + `<div style=\"width:120px;\"></div>`
+                + renderNodes(findAllByPositions(officers, ['PRO External']))
+                + `</div>`;
+            html += `<div class=\"org-connector horizontal\" style=\"width: 300px; top: 460px; left: 50%; transform: translate(-50%, -50%);\"></div>`;
+            // Level 4: Reps/MMs under PRO Internal/External
+            html += `<div class=\"org-level\">`
+                + renderNodes(findAllByPositions(officers, ['1st Rep', '1st Yr. Rep']))
+                + renderNodes(findAllByPositions(officers, ['2nd Rep', '2nd Yr. Rep']))
+                + renderNodes(findAllByPositions(officers, ['MM Esports', 'E-Sports Multimedia']))
+                + `<div style=\"width:120px;\"></div>`
+                + renderNodes(findAllByPositions(officers, ['3rd Rep', '3rd Yr. Rep']))
+                + renderNodes(findAllByPositions(officers, ['4th Rep', '4th Yr. Rep']))
+                + renderNodes(findAllByPositions(officers, ['Senior MM', 'Senior Multimedia']))
+                + renderNodes(findAllByPositions(officers, ['Multi Media', 'Multimedia']))
+                + `</div>`;
+            return html;
+        }
+
+        // Main functions
+        async function fetchSlides() {
+            try {
+                const response = await fetch('../Api/get_slides_data.php');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    return result.data;
+                } else {
+                    throw new Error(result.message || 'Failed to fetch slides');
+                }
+            } catch (error) {
+                console.error('Error fetching slides:', error);
+                throw error;
+            }
+        }
+
+        function renderSlides(items) {
+            const container = document.getElementById('slidesContainer');
+            container.innerHTML = items.map(item => {
+                const template = templates[item.type] || templates.basic;
+                return template(item);
+            }).join('');
+            
+            slides = container.querySelectorAll('.slide');
+            document.querySelector('.slide-counter').textContent = `1 / ${slides.length}`;
+        }
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+            document.querySelector('.slide-counter').textContent = `${index + 1} / ${slides.length}`;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progressBar = document.querySelector('.progress-bar');
+            progressBar.style.width = '0%';
+            progressBar.style.transition = `width ${delay}ms linear`;
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 50);
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function startSlideShow() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+            slideInterval = setInterval(nextSlide, delay);
+            updateProgress();
+        }
+
+        async function checkForUpdates() {
+            const loadingIndicator = document.querySelector('.loading-indicator');
+            try {
+                loadingIndicator.classList.add('active');
+                const newItems = await fetchSlides();
+                
+                // Compare with current slides
+                const currentContent = Array.from(slides).map(slide => slide.innerHTML).join('');
+                const newContent = newItems.map(item => {
+                    const template = templates[item.type] || templates.basic;
+                    return template(item);
+                }).join('');
+                
+                if (currentContent !== newContent) {
+                    // Store current index before update
+                    const previousIndex = currentIndex;
+                    
+                    // Render new slides
+                    renderSlides(newItems);
+                    
+                    // Try to maintain the same position if possible
+                    currentIndex = Math.min(previousIndex, slides.length - 1);
+                    showSlide(currentIndex);
+                    
+                    // Only restart the slideshow if it's not already running
+                    if (!slideInterval) {
+                        startSlideShow();
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking for updates:', error);
+            } finally {
+                loadingIndicator.classList.remove('active');
+            }
+        }
+
+        // Initialize
+        async function initialize() {
+            try {
+                const items = await fetchSlides();
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('slidesContainer').style.display = 'block';
+                renderSlides(items);
+                currentIndex = 0;
+                showSlide(0);
+                startSlideShow();
+                
+                // Start periodic updates with a longer interval
+                setInterval(checkForUpdates, updateInterval);
+            } catch (error) {
+                document.getElementById('loadingState').innerHTML = `
+                    <div class="loading-spinner"></div>
+                    <p>Error loading content. Please refresh the page.</p>
+                `;
+                console.error('Initialization error:', error);
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            clearInterval(slideInterval);
+            nextSlide();
+            startSlideShow();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            clearInterval(slideInterval);
+            prevSlide();
+            startSlideShow();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                clearInterval(slideInterval);
+                nextSlide();
+                startSlideShow();
+            } else if (e.key === 'ArrowLeft') {
+                clearInterval(slideInterval);
+                prevSlide();
+                startSlideShow();
+            }
+        });
+
+        // Touch Navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                clearInterval(slideInterval);
+                nextSlide();
+                startSlideShow();
+            } else if (touchEndX > touchStartX + swipeThreshold) {
+                clearInterval(slideInterval);
+                prevSlide();
+                startSlideShow();
+            }
+        }
+
+        // Modal functionality
+        function showModal(title, content, buttons = []) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close">&times;</button>
+                    <h2 class="modal-title">${escapeHtml(title)}</h2>
+                    <div class="modal-body">${content}</div>
+                    ${buttons.length ? `
+                        <div class="modal-footer">
+                            ${buttons.map(btn => `
+                                <button class="modal-button ${btn.primary ? 'primary' : ''}"
+                                        onclick="${btn.onClick}">${escapeHtml(btn.text)}</button>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            requestAnimationFrame(() => modal.classList.add('show'));
+
+            const closeModal = () => {
+                modal.classList.remove('show');
+                setTimeout(() => modal.remove(), 300);
+            };
+
+            modal.querySelector('.modal-close').onclick = closeModal;
+            modal.onclick = (e) => {
+                if (e.target === modal) closeModal();
+            };
+
+            return closeModal;
+        }
+
+        // Example event handler for calendar events
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.event')) {
+                const event = e.target.closest('.event');
+                const title = event.textContent.trim();
+                const details = event.querySelector('.event-details');
+                
+                // Format the event details
+                let formattedDetails = '';
+                if (details) {
+                    const timeMatch = details.textContent.match(/(\d{1,2}:\d{2}(?:\s?[ap]m)?)/i);
+                    const locationMatch = details.textContent.match(/\s*-\s*(.+)$/);
+                    
+                    if (timeMatch) {
+                        // Convert time to proper format if needed
+                        const timePart = timeMatch[1];
+                        const date = new Date(`2000-01-01 ${timePart}`);
+                        formattedDetails = new Date(`2000-01-01 ${timePart}`).toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true
+                        }).toLowerCase();
+                    }
+                    
+                    if (locationMatch) {
+                        formattedDetails += ` at ${locationMatch[1]}`;
+                    }
+                }
+                
+                showModal('Event Details', `
+                    <p style="font-size: 1.4em; margin-bottom: 15px;">${escapeHtml(title)}</p>
+                    ${formattedDetails ? `<p style="color: #ccc; font-size: 1.2em;">${escapeHtml(formattedDetails)}</p>` : ''}
+                `);
+            }
+        });
+
+        // Add these functions to handle month navigation
+        function changeMonth(delta) {
+            // This function will be implemented when we add the backend support
+            console.log('Change month by:', delta);
+        }
+
+        function resetToCurrentMonth() {
+            // This function will be implemented when we add the backend support
+            console.log('Reset to current month');
+        }
+
+        // Start the application
+        initialize();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,3460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bulletin - Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        html, body { 
+            height: 100%; 
+            background: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .screen { 
+            height: 100%; 
+            display: grid; 
+            grid-template-columns: 360px 1fr minmax(340px, 26vw); 
+            grid-template-rows: auto 1fr auto; 
+            gap: 12px; 
+            padding: 12px; 
+        }
+        
+        .topbar { 
+            grid-column: 1 / -1; 
+            background: #ffffff; 
+            color: #333; 
+            border-radius: 10px; 
+            display: flex; 
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px 24px; 
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            border: 2px solid #7B0000;
+        }
+        
+        .topbar-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 20px;
+        }
+        
+        .logos-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+        
+        .header-logo {
+            height: 80px;
+            width: auto;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .topbar .logo { 
+            font-weight: 700; 
+            letter-spacing: 0.5px; 
+        }
+        
+        .topbar .spacer { 
+            flex: 1; 
+        }
+        
+        .time-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .time-top {
+            font-weight: 700;
+            font-size: 2em;
+            color: #7B0000;
+            line-height: 1.1;
+        }
+        .time-bottom {
+            font-weight: 600;
+            font-size: 1.4em;
+            color: #7B0000;
+            opacity: 0.9;
+            line-height: 1.1;
+            margin-top: 4px;
+        }
+
+        .panel { 
+            background: #ffffff; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); 
+            overflow: hidden; 
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .left { 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%;
+            min-height: 100%;
+            transition: all 0.8s ease-in-out;
+        }
+        
+        .left .section-title { 
+            background: #006633; 
+            color: #fff; 
+            padding: 15px 20px; 
+            font-weight: 600; 
+            letter-spacing: 0.4px; 
+            font-size: 1.2em;
+        }
+        
+        .list { 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            overflow: auto; 
+        }
+        
+        .list-item { 
+            border: 1px solid #e0e0e0; 
+            border-left: 4px solid #7B0000; 
+            border-radius: 12px; 
+            padding: 15px 18px; 
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .list-item:hover {
+            box-shadow: 0 4px 12px rgba(123, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(123, 0, 0, 0.3);
+        }
+        
+        .list-item .title { 
+            font-weight: 600; 
+            font-size: 1.1em; 
+            margin-bottom: 8px; 
+            color: #7B0000;
+        }
+        
+        .list-item .meta { 
+            color: #666; 
+            font-size: 0.9em; 
+            font-style: italic;
+        }
+
+        .center { 
+            position: relative; 
+            display: flex; 
+            align-items: stretch; 
+            justify-content: center; 
+            transition: all 0.8s ease-in-out;
+            height: 100%;
+            min-height: 100%;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .center.expanded {
+            grid-column: 1 / 3;
+            /* transform: translateX(-360px); */
+            max-width: calc(100% + 360px);
+            height: 100%;
+            min-height: 100%;
+        }
+        
+        .hero { 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: stretch; 
+            justify-content: center; 
+            background: #ffffff; 
+            border-radius: 0;
+            transition: all 0.8s ease-in-out;
+        }
+        /* Hide scrollbars inside center panel (keep scrolling functional) */
+        .hero, .hero * {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;    /* Firefox */
+        }
+        .hero::-webkit-scrollbar, .hero *::-webkit-scrollbar {
+            display: none;            /* Chrome, Safari, Opera */
+        }
+        /* Hide all scrollbars globally while preserving scroll functionality */
+        * {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;    /* Firefox */
+        }
+        *::-webkit-scrollbar {
+            display: none;            /* Chrome, Safari, Opera */
+        }
+        
+        .hero img, .hero video { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            border-radius: 20px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .hero div {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .right { 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            overflow-y: auto;
+            height: 100%;
+            min-height: 100%;
+        }
+        
+        .hierarchy-section {
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .hierarchy-section:hover {
+            box-shadow: 0 4px 12px rgba(123, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .hierarchy-header {
+            background: #006633;
+            color: #fff;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        
+        .hierarchy-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        
+        .hierarchy-item:hover {
+            background: rgba(123, 0, 0, 0.05);
+            border-color: rgba(123, 0, 0, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .hierarchy-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7B0000;
+            flex-shrink: 0;
+        }
+        
+        .hierarchy-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .hierarchy-item .name {
+            font-weight: 600;
+            color: #7B0000;
+            font-size: 1em;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .hierarchy-item .position {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.3;
+        }
+        
+        .hierarchy-item .specialization {
+            font-size: 0.8em;
+            color: #7B0000;
+            margin-top: 8px;
+            font-style: italic;
+            font-weight: 500;
+            padding: 4px 8px;
+            background: rgba(123, 0, 0, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #7B0000;
+        }
+        
+        .hierarchy-item .no-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            border: 2px solid #7B0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7B0000;
+            font-size: 0.8em;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Marquee Styles - Infinite Scroll Approach */
+        .marquee-container {
+            flex: 1;
+            overflow: hidden;
+            background: #006633; /* OLFU green */
+            color: #fff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            position: relative;
+            border: 1px solid #006633; /* OLFU green */
+            min-width: 0; /* Allow shrinking */
+        }
+        
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            font-size: 2em;
+            font-weight: 700;
+            will-change: transform;
+            animation-fill-mode: both;
+        }
+        
+        .marquee-content.animate {
+            animation: none;
+        }
+        
+        .marquee-content.transitioning {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .marquee-content.loaded {
+            opacity: 1;
+        }
+        
+        .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 100px;
+            opacity: 0.95;
+            flex-shrink: 0;
+        }
+        
+        .marquee-separator {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0 20px;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        @keyframes scroll-left-infinite {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+        
+        /* Marquee pause indicator */
+        .marquee-container:hover::after {
+            content: "⏸️ Paused";
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            pointer-events: none;
+        }
+        
+        /* Marquee transition effects */
+        .marquee-content.transitioning {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .marquee-content.loaded {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .screen { 
+                grid-template-columns: 300px 1fr minmax(280px, 24vw); 
+                gap: 14px;
+                padding: 14px;
+            }
+            
+            .logos-section {
+                gap: 10px;
+            }
+            
+            .header-logo {
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 980px) {
+            .screen { 
+                grid-template-columns: 1fr; 
+                grid-template-rows: auto auto auto 1fr auto; 
+                gap: 15px;
+            }
+            
+            .topbar-main {
+                gap: 15px;
+            }
+            
+            .marquee-container {
+                min-width: 200px;
+            }
+            
+            .left, .center, .right { 
+                min-height: 300px; 
+            }
+            
+            .panel {
+                border-radius: 15px;
+            }
+            
+            .list {
+                padding: 15px;
+            }
+            
+            .right {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .screen {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .topbar {
+                padding: 12px 15px;
+                border-radius: 8px;
+            }
+            
+            .topbar-main {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .logos-section {
+                gap: 10px;
+            }
+            
+            .header-logo {
+                height: 36px;
+            }
+            
+            .marquee-container {
+                width: 100%;
+                order: 2;
+            }
+            
+            .time-block { order: 1; }
+            .time-top { font-size: 1.7em; }
+            .time-bottom { font-size: 1.1em; }
+            
+            .panel {
+                border-radius: 12px;
+            }
+            
+            .list {
+                padding: 12px;
+                gap: 10px;
+            }
+            
+            .list-item {
+                padding: 12px 15px;
+            }
+            
+            .right {
+                padding: 12px;
+                gap: 15px;
+            }
+            
+            .marquee-content {
+                font-size: 1.6em;
+            }
+            
+            .marquee-item {
+                margin-right: 60px;
+            }
+        }
+        
+        /* Calendar Styles */
+        .calendar-container {
+            width: 100%;
+            max-width: 100%;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            margin: 10px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .calendar-container .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            background: #7B0000;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .calendar-container .button {
+            padding: 8px 15px;
+            background: #7B0000;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-container .button:hover {
+            background: #8B0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 0, 0, 0.3);
+        }
+
+        .calendar-container .button.arrow {
+            font-size: 15px;
+            padding: 8px 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .calendar-container .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .calendar-container .calendar-header {
+            background: #7B0000;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .calendar-container .calendar-day {
+            background: #ffffff;
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+            height: 160px;
+            position: relative;
+            overflow: auto;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .calendar-container .calendar-day:hover {
+            background: #f8f9fa;
+        }
+
+        .calendar-container .day-number {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .calendar-container .event {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: left;
+            margin-left: 8px;
+            margin-right: 8px;
+            cursor: pointer;
+            position: relative;
+            height: auto;
+            min-height: 45px;
+            overflow: hidden;
+            white-space: normal;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .calendar-container .event.event-type {
+            background: rgba(123, 0, 0, 0.1);
+            border: 1px solid rgba(123, 0, 0, 0.2);
+            color: #7B0000;
+            font-weight: 600;
+        }
+
+        .calendar-container .event.event-type:hover {
+            background: rgba(123, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .calendar-container .event.announcement-type {
+            background: rgba(123, 0, 0, 0.1);
+            border: 1px solid rgba(123, 0, 0, 0.2);
+            color: #7B0000;
+        }
+
+        .calendar-container .event.announcement-type:hover {
+            background: rgba(123, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .calendar-container .empty {
+            background: #f8f9fa;
+        }
+
+        .calendar-container .event-details {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #666;
+            font-weight: normal;
+            display: block;
+        }
+
+        .calendar-container .month-label {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Responsive Calendar Styles */
+        @media (max-width: 768px) {
+            .calendar-container .calendar {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .calendar-container .calendar-day.empty {
+                display: none;
+            }
+
+            .calendar-container .calendar-header {
+                display: none;
+            }
+
+            .calendar-container .calendar-day {
+                height: auto;
+                min-height: 100px;
+                padding: 10px;
+                font-size: 14px;
+                text-align: left;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+
+            .calendar-container .day-number {
+                position: static;
+                display: block;
+                font-weight: bold;
+                margin-bottom: 8px;
+                font-size: 16px;
+            }
+
+            .calendar-container .event {
+                height: auto;
+                font-size: 13px;
+                margin-top: 8px;
+                padding: 6px 10px;
+            }
+
+            .calendar-container .header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .calendar-container .button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            .calendar-container .button.arrow {
+                font-size: 20px;
+                padding: 6px 12px;
+            }
+
+            .calendar-container .month-label {
+                flex-grow: 1;
+                text-align: center;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <div class="topbar">
+            <div class="topbar-main">
+                <div class="logos-section">
+                    <img src="../images/logoOLFU.png" alt="OLFU Logo" class="header-logo">
+                    <img src="../images/logoCCS.png" alt="CCS Logo" class="header-logo">
+                    <img src="../images/logoFCMS.png" alt="Main Logo" class="header-logo">
+                </div>
+                <div class="marquee-container">
+                    <div class="marquee-content animate" id="marqueeContent">
+                        <div class="marquee-item">Welcome to Smart Bulletin Board - Your Digital Campus Hub!</div>
+                    </div>
+                </div>
+                <div class="time-block">
+                    <div class="time-top" id="timeTop">--:-- --</div>
+                    <div class="time-bottom" id="timeBottom">---, --- --</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel left">
+            <div class="section-title">Announcements</div>
+            <div id="annList" class="list"></div>
+            <div class="section-title">Events</div>
+            <div id="evtList" class="list"></div>
+        </div>
+
+        <div class="center">
+            <div id="hero" class="hero"></div>
+        </div>
+
+        <div class="panel right">
+            <div id="facultyOfficers" class="right"></div>
+        </div>
+
+        <!-- ticker removed -->
+    </div>
+
+    <script>
+        const API_URL = '../api/get_slides_data.php';
+        const MARQUEE_API_URL = '../api/get_marquee_data.php';
+
+        function formatTopTime() {
+            const d = new Date();
+            const time = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+            const day = d.toLocaleDateString([], { weekday:'short' });
+            const date = d.toLocaleDateString([], { month:'short', day:'numeric' });
+            const timeEl = document.getElementById('timeTop');
+            const dateEl = document.getElementById('timeBottom');
+            if (timeEl) timeEl.textContent = time;
+            if (dateEl) dateEl.textContent = `${day}, ${date}`;
+        }
+        setInterval(formatTopTime, 1000); formatTopTime();
+
+        function esc(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#039;'}[m])); }
+        function base(path){ return String(path||'').split('/').pop(); }
+
+		// Normalize strings for diacritic-insensitive comparisons (supports ñ/Ñ and others)
+		function normalizeForCompare(value){
+			try {
+				return String(value||'')
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '')
+					.toLowerCase();
+			} catch(_) {
+				// Fallback if normalize not supported
+				return String(value||'').toLowerCase();
+			}
+		}
+
+        let currentSlideIndex = 0;
+        let slideInterval;
+        let previousSlide = null;
+        let hasShownEvent = false;
+        let hasShownAnnouncement = false;
+        let isReturningToSlideshow = false;
+
+		function renderHero(items){
+			// Build slides in strict order: events first (media + text), then announcements (media + text + grouped)
+			const eventSlides = items.filter(i => i.type === 'events');
+			const groupedAnnouncements = items.filter(i => i.type === 'announcements_group')
+				.flatMap(g => g.announcements || [])
+				.filter(a => !a.file_path);
+			const announcementSingles = items.filter(i => i.type === 'announcements');
+			const announcementSlides = [...announcementSingles, ...groupedAnnouncements];
+			
+			// Add calendar slide before organization charts transition
+			const calendarSlide = {
+				type: 'calendar',
+				title: 'Calendar',
+				file_path: null,
+				calendarData: getCalendarData()
+			};
+			
+			const allSlides = [...eventSlides, ...announcementSlides, calendarSlide];
+            
+            // Store original slides for later return and reset gating flags
+            originalSlides = allSlides;
+            hasShownEvent = false;
+            hasShownAnnouncement = false;
+            
+            // Reset slideshow completion flag to allow new slideshow cycles
+            slideshowCompleted = false;
+            
+			console.log('Slideshow items:', {
+				order: 'events_then_announcements',
+				events: eventSlides.length,
+				announcements: announcementSlides.length,
+				groupedAnnouncements: groupedAnnouncements.length,
+				total: allSlides.length,
+				debug: {
+					allEvents: eventSlides.map(e => ({ title: e.title, type: e.type })),
+					allAnnouncements: announcementSlides.map(a => ({ title: a.title, type: a.type, user_type: a.user_type })),
+					finalSlides: allSlides.map(s => ({ title: s.title, type: s.type }))
+				}
+			});
+            
+            if(allSlides.length === 0) {
+                console.log('No content available - redirecting to organization chart');
+                // Immediately expand to show organization charts when no content is available
+                expandCenterPanel();
+                return;
+            }
+
+            // Start slideshow
+            currentSlideIndex = 0;
+            showSlide(allSlides, 0);
+            startSlideshow(allSlides);
+        }
+
+        function showSlide(slides, index) {
+            // Prevent hero updates while org charts are active or during return transition
+            if (isOrgChartsActive || isReturningToSlideshow) {
+                try { console.log('showSlide blocked during transition', { isOrgChartsActive, isReturningToSlideshow }); } catch(e) {}
+                return;
+            }
+            const el = document.getElementById('hero');
+            const slide = slides[index];
+            
+            // Debug: log every slide display
+            try {
+                console.log('showSlide', { index, total: slides.length, title: slide && slide.title, type: slide && slide.type, hasMedia: slide && !!slide.file_path });
+            } catch(e) {}
+            
+            // Update previous slide in the right panel
+            if (previousSlide) {
+                updatePreviousSlideDisplay(previousSlide);
+            }
+            
+            // Set current slide as previous for next iteration
+            previousSlide = slide;
+            
+            // Mark category as shown for gating
+            if (slide && slide.type === 'events') hasShownEvent = true;
+            if (slide && (slide.type === 'announcements' || slide.type === 'announcements_group')) hasShownAnnouncement = true;
+            
+            if(slide.file_path) {
+                const ext = slide.file_path.split('.').pop().toLowerCase();
+                const src = `../multimedia/${slide.type}/${base(slide.file_path)}`;
+                if(['jpg','jpeg','png','gif','webp'].includes(ext)){
+                    el.innerHTML = `<img src="${esc(src)}" alt="${esc(slide.title || '')}" style="width:100%; height:100%; object-fit:contain;">`;
+                } else if(['mp4','webm','ogg'].includes(ext)){
+                    el.innerHTML = `<video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:contain;"><source src="${esc(src)}" type="video/${ext}"></video>`;
+                }
+            } else if(slide.type === 'calendar') {
+                // Handle calendar slide
+                el.innerHTML = `
+                    <div style="color:#7B0000; padding:10px; text-align:center; max-width:100%; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                        <h2 style="font-size:1.8em; margin-bottom:10px;">${esc(slide.title || '')}</h2>
+                        <div id="calendar-display" style="width:100%; max-width:95%; height:calc(100% - 50px); overflow-y:auto;">
+                            <div style="text-align: center; padding: 40px; color: #7B0000;">
+                                Loading calendar...
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Load calendar data
+                slide.calendarData.then(calendarHtml => {
+                    const calendarDisplay = document.getElementById('calendar-display');
+                    if (calendarDisplay) {
+                        calendarDisplay.innerHTML = calendarHtml;
+                    }
+                }).catch(error => {
+                    console.error('Error loading calendar:', error);
+                    const calendarDisplay = document.getElementById('calendar-display');
+                    if (calendarDisplay) {
+                        calendarDisplay.innerHTML = '<div style="text-align: center; padding: 40px; color: #7B0000;">Calendar unavailable</div>';
+                    }
+                });
+            } else {
+                el.innerHTML = `
+                    <div style="color:#7B0000; padding:40px; text-align:center; max-width:800px; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                        <h2 style="font-size:2.5em; margin-bottom:20px;">${esc(slide.title || '')}</h2>
+                        <p style="font-size:1.3em; line-height:1.6;">${esc(slide.description || '')}</p>
+                        ${slide.extra_info ? `<p style=\"font-size:1.1em; margin-top:15px; opacity:0.9; font-style:italic;\">${esc(slide.extra_info)}</p>` : ''}
+                    </div>
+                `;
+            }
+        }
+
+        function startSlideshow(slides) {
+            if(slideInterval) clearInterval(slideInterval);
+            
+            slideInterval = setInterval(() => {
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                showSlide(slides, currentSlideIndex);
+                
+                // Check if we've completed a cycle and categories requirement is met
+                if (currentSlideIndex === slides.length - 1 && !slideshowCompleted) {
+                    const slidesContainEvents = slides.some(s => s.type === 'events');
+                    const slidesContainAnnouncements = slides.some(s => s.type === 'announcements' || s.type === 'announcements_group');
+                    const categoriesRequirementMet = (!slidesContainEvents || hasShownEvent) && (!slidesContainAnnouncements || hasShownAnnouncement);
+                    
+                    console.log('Completed cycle check:', { 
+                        currentSlideIndex, 
+                        totalSlides: slides.length,
+                        hasShownEvent, 
+                        hasShownAnnouncement, 
+                        categoriesRequirementMet,
+                        slidesContainEvents,
+                        slidesContainAnnouncements
+                    });
+                    
+                    if (categoriesRequirementMet) {
+                        // Requirements met, stop slideshow and expand
+                        clearInterval(slideInterval);
+                        slideshowCompleted = true;
+                        console.log('Slideshow completed one cycle - expanding to show organization charts');
+                        
+                        // Fix the previous slide display after showSlide has been called
+                        setTimeout(() => {
+                            if (slides.length > 1) {
+                                const secondToLastSlide = slides[slides.length - 2];
+                                updatePreviousSlideDisplay(secondToLastSlide);
+                            }
+                        }, 100);
+                        
+                        setTimeout(() => { expandCenterPanel(); }, 5000);
+                    } else {
+                        // Requirements not met, continue cycling but reset flags for next cycle
+                        console.log('Categories requirement not met yet, continuing cycle...', { hasShownEvent, hasShownAnnouncement });
+                        // Reset the category flags to allow them to be set again in the next cycle
+                        hasShownEvent = false;
+                        hasShownAnnouncement = false;
+                    }
+                }
+            }, slideIntervalDuration); // Change slide based on configuration
+        }
+        
+        function expandCenterPanel() {
+            const centerPanel = document.querySelector('.center');
+            centerPanel.classList.add('expanded');
+            isOrgChartsActive = true;
+            
+            // Immediately stop any running slideshow and clear current hero content to avoid flash
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+            
+            // Clean up any existing specializations panels before creating new ones
+            const existingSpecializationsPanel = document.getElementById('specializationsPanel');
+            if (existingSpecializationsPanel) {
+                existingSpecializationsPanel.remove();
+                console.log('Removed existing specializations panel before expanding');
+            }
+            
+            const heroImmediate = document.getElementById('hero');
+            if (heroImmediate) {
+                heroImmediate.style.opacity = '0';
+                heroImmediate.innerHTML = '';
+            }
+            
+            // Hide the left panel
+            const leftPanel = document.querySelector('.left');
+            leftPanel.style.opacity = '0';
+            leftPanel.style.pointerEvents = 'none';
+            
+            // Hide the right panel and replace with specializations panel
+            const rightPanel = document.querySelector('.panel.right');
+            rightPanel.style.opacity = '0';
+            rightPanel.style.pointerEvents = 'none';
+            
+            // Create specializations panel
+            setTimeout(() => {
+                createSpecializationsPanel();
+            }, 400);
+            
+            // Display organization charts in the expanded area
+            setTimeout(() => {
+                const hero = document.getElementById('hero');
+                hero.innerHTML = `
+                    <div style="color:#7B0000; padding:5px; text-align:center; width:100%; height:100%; min-height:100vh; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;">
+                        
+                        <div id="expandedOrgCharts" style="display:flex; flex-direction:column; gap:30px; max-width:100%; margin:0; width:100%; min-height:calc(100vh - 10px); justify-content:flex-start;">
+                            <!-- Organization charts will be inserted here -->
+                        </div>
+                    </div>
+                `;
+                // Fade in the new content smoothly after clearing old content
+                requestAnimationFrame(() => {
+                    hero.style.opacity = '1';
+                });
+                
+                // Load and display the organization charts
+                loadExpandedOrgCharts();
+            }, 800); // Wait for transition to complete
+        }
+        
+        function loadExpandedOrgCharts() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(json => {
+                    if(json.status === 'success') {
+                        displayExpandedOrgCharts(json.data);
+                    }
+                })
+                .catch(error => console.error('Error loading org charts:', error));
+        }
+        
+        // Helper function to split array into chunks
+        function chunkArray(array, chunkSize) {
+            const chunks = [];
+            for (let i = 0; i < array.length; i += chunkSize) {
+                chunks.push(array.slice(i, i + chunkSize));
+            }
+            
+            // If the last chunk has only 1 item, merge it with the previous chunk
+            if (chunks.length > 1 && chunks[chunks.length - 1].length === 1) {
+                const lastItem = chunks.pop();
+                chunks[chunks.length - 1].push(...lastItem);
+            }
+            
+            return chunks;
+        }
+
+        // Function to get calendar data
+        function getCalendarData() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            
+            // Fetch calendar data from API
+            return fetch(`../api/get_calendar_data.php?year=${year}&month=${month}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        return data.data.calendarHtml;
+                    } else {
+                        throw new Error(data.message || 'Failed to fetch calendar data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching calendar data:', error);
+                    return '<div style="text-align: center; padding: 20px; color: #7B0000;">Calendar unavailable</div>';
+                });
+        }
+
+        function displayExpandedOrgCharts(items) {
+            const container = document.getElementById('expandedOrgCharts');
+            
+            // Prepare organization sections for cycling
+            const orgSections = [];
+            
+            // Org chart image slide (first slide)
+            const orgChartImageItem = items.find(i => i.type === 'org_chart_image');
+            if (orgChartImageItem) {
+                orgSections.push({
+                    title: orgChartImageItem.title,
+                    type: 'org_chart_image',
+                    image_path: orgChartImageItem.image_path
+                });
+            }
+            
+            // Individual administrator slides
+            const individualAdmins = items.filter(i => i.type === 'individual_admin');
+            if (individualAdmins.length > 0) {
+                individualAdmins.forEach(admin => {
+                    orgSections.push({
+                        title: admin.title,
+                        position: admin.position,
+                        description: admin.description,
+                        specialization: admin.specialization,
+                        file_path: admin.file_path,
+                        type: 'individual_admin'
+                    });
+                });
+            }
+            
+            // Faculty section
+            const facultyItems = items.filter(i => i.type === 'faculty');
+            if (facultyItems.length > 0) {
+                facultyItems.forEach(faculty => {
+                    if (faculty.faculty && Array.isArray(faculty.faculty)) {
+                        // Split faculty into chunks of maximum 6 members each
+                        const facultyChunks = chunkArray(faculty.faculty, 6);
+                        
+                        facultyChunks.forEach((chunk, index) => {
+                            const pageTitle = faculty.title;
+                            
+                            orgSections.push({
+                                title: pageTitle,
+                                members: chunk,
+                                type: 'faculty'
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Student Officers section
+            const officersItems = items.filter(i => i.type === 'officers_tree');
+            if (officersItems.length > 0) {
+                officersItems.forEach(officers => {
+                    if (officers.officers && Array.isArray(officers.officers)) {
+                        // Split officers into chunks of maximum 10 members each
+                        const officerChunks = chunkArray(officers.officers, 10);
+                        
+                        officerChunks.forEach((chunk, index) => {
+                            const pageTitle = officers.title;
+                            
+                            orgSections.push({
+                                title: pageTitle,
+                                members: chunk,
+                                type: 'officers'
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Fallback if no data
+            if (orgSections.length === 0) {
+                container.innerHTML = `
+                    <div style="background:rgba(255,255,255,0.1); border-radius:20px; padding:25px; text-align:center;">
+                        <h3 style="font-size:2em; margin-bottom:20px; color:#fff;">No Organization Data</h3>
+                        <p style="font-size:1.2em; color:rgba(255,255,255,0.8);">Please check the database for faculty and officer information.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Start organization charts slideshow
+            startOrgChartsSlideshow(orgSections, container);
+        }
+        
+        let orgChartInterval;
+        let currentOrgSectionIndex = 0;
+        let originalSlides = []; // Store the original slides for return
+        let orgSections = []; // Store organization sections globally
+        let isWaitingForSpecializations = false;
+        let isOrgChartsActive = false; // Track whether org charts mode is active
+        
+        function startOrgChartsSlideshow(sections, container) {
+            if (orgChartInterval) clearInterval(orgChartInterval);
+            
+            orgSections = sections; // Store sections globally
+            currentOrgSectionIndex = 0;
+            // Lock advancement before first render to avoid rapid skips
+            isWaitingForSpecializations = true;
+            showOrgSection(sections, container, 0);
+            
+            // Start the slideshow for specializations panel
+            startSpecializationsForCurrentSection();
+            
+            // Advance sections on a safer cadence and guard with the waiting flag
+            orgChartInterval = setInterval(() => {
+                if (isWaitingForSpecializations) {
+                    return;
+                }
+                // Immediately lock to prevent multiple rapid advances in the same tick
+                isWaitingForSpecializations = true;
+                
+                // Detect if we are leaving the officers section; if so, stop its slideshow immediately
+                const previousSectionType = orgSections[currentOrgSectionIndex]?.type;
+                const nextIndex = (currentOrgSectionIndex + 1) % sections.length;
+                const nextSectionType = orgSections[nextIndex]?.type;
+
+                // Advance to next section
+                currentOrgSectionIndex = nextIndex;
+                showOrgSection(sections, container, currentOrgSectionIndex);
+
+                // If we just left officers, hard-stop any officers slideshow and clear its UI
+                if (previousSectionType === 'officers' && nextSectionType !== 'officers') {
+                    try {
+                        stopOfficerSlideshow();
+                        const officersListElement = document.getElementById('officersList');
+                        if (officersListElement) officersListElement.innerHTML = '';
+                    } catch(e) {}
+                }
+                
+                // Start specializations for the new section
+                startSpecializationsForCurrentSection();
+                
+                // After completing one full cycle through all sections, return to original slideshow
+                // Check if we've completed one full rotation (back to start)
+                if (currentOrgSectionIndex === 0 && orgChartInterval !== null) {
+                    clearInterval(orgChartInterval); // Stop the org charts slideshow
+                    console.log('Organization charts completed one cycle - returning to original slideshow');
+                    // Return immediately without waiting for specializations to complete
+                    returnToOriginalSlideshow();
+                }
+            }, orgChartIntervalDuration); // Use configured interval for org chart section
+        }
+        
+        /**
+         * Fisher-Yates shuffle algorithm for randomizing arrays
+         * @param {Array} array - The array to shuffle
+         * @returns {Array} - Shuffled copy of the array
+         */
+        function shuffleArray(array) {
+            const shuffled = [...array]; // Create a copy
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function startSpecializationsForCurrentSection() {
+            // Do nothing if org charts are not active (prevents retries during slideshow mode)
+            if (!isOrgChartsActive) {
+                return;
+            }
+            const currentSection = orgSections[currentOrgSectionIndex];
+            
+            // Check if specializations panel exists
+            const specializationsContent = document.getElementById('specializationsContent');
+            if (!specializationsContent) {
+                // Throttle warning
+                const now = Date.now();
+                if (!window.__lastSpecWarnAt || now - window.__lastSpecWarnAt > 1500) {
+                    console.warn('Specializations panel not ready, skipping specializations for this section');
+                    window.__lastSpecWarnAt = now;
+                }
+                // Single-flight retry guard
+                if (window.__specRetryPending) return;
+                window.__specRetryPending = true;
+                // Keep locked briefly and retry soon to avoid fast skipping
+                isWaitingForSpecializations = true;
+                setTimeout(() => {
+                    window.__specRetryPending = false;
+                    if (!isOrgChartsActive) return;
+                    startSpecializationsForCurrentSection();
+                }, 300);
+                return;
+            }
+            
+            // IMPORTANT: Check for officers section FIRST before any faculty specialization setup
+            // This prevents the brief flash of faculty specializations when switching to officers
+            if (currentSection && (currentSection.type === 'officers' || currentSection.title && currentSection.title.includes('Officer'))) {
+                // For officers section, show Mission & Vision in the specializations panel
+                // Calculate which officer slide we're on (to alternate between University and College)
+                const officerSlideIndex = getCurrentOfficerSlideIndex();
+                console.log('Showing Mission & Vision in specializations panel, officer slide index:', officerSlideIndex);
+                showMissionVisionPanel(officerSlideIndex);
+                // Immediately unlock center panel advancement - Mission & Vision is static and shouldn't block slides
+                isWaitingForSpecializations = false;
+                return;
+            }
+            
+            // Ensure the faculty card container exists; if not, render the structure and retry
+            const facultyCardEl = document.getElementById('facultyCard');
+            if (!facultyCardEl) {
+                if (Array.isArray(facultySpecializationsList)) {
+                    displaySpecializations(facultySpecializationsList);
+                }
+                isWaitingForSpecializations = true;
+                setTimeout(() => {
+                    startSpecializationsForCurrentSection();
+                }, 300);
+                return;
+            }
+
+            if (!currentSection || !facultySpecializationsList || facultySpecializationsList.length === 0) {
+                // No specializations available, advance after standard time
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+                return;
+            }
+            
+            // Filter specializations based on current section
+            let relevantSpecializations = [];
+            
+            console.log('Current section:', currentSection.type, 'Title:', currentSection.title);
+            
+            // For org chart image and individual admin slides, show randomized faculty
+            if (currentSection.type === 'org_chart_image' || currentSection.type === 'individual_admin') {
+                // Show all faculty (excluding administrators) in randomized order
+                const allFaculty = facultySpecializationsList.filter(spec => spec.type === 'faculty');
+                relevantSpecializations = shuffleArray(allFaculty);
+                console.log('Org chart section - showing randomized faculty:', relevantSpecializations.length, 'members');
+                
+                // For org chart sections, start specializations and unlock immediately
+                // so center panel can advance independently at configured interval
+                if (relevantSpecializations.length > 0) {
+                    stopFacultySlideshow();
+                    console.log('Starting independent faculty slideshow for org chart section');
+                    startSynchronizedFacultySlideshow(relevantSpecializations, true); // true = unlock immediately
+                    return; // Exit early since we handled it
+                }
+			} else if (currentSection.type === 'admins' || currentSection.title.includes('Administrator')) {
+                // Show only administrators that are in the current slide
+				const currentAdminNames = currentSection.members.map(member => member.title || member.name);
+				const currentAdminNamesNorm = currentAdminNames.map(normalizeForCompare);
+				relevantSpecializations = facultySpecializationsList.filter(spec => 
+					spec.type === 'administrator' && currentAdminNamesNorm.includes(normalizeForCompare(spec.name))
+				);
+                console.log('Filtered administrators for current slide:', relevantSpecializations.length, 'from', currentAdminNames.length, 'displayed members');
+			} else if (currentSection.type === 'faculty' || currentSection.title.includes('Faculty')) {
+                // Show only faculty members that are in the current slide
+				const currentFacultyNames = currentSection.members.map(member => member.title || member.name);
+				const currentFacultyNamesNorm = currentFacultyNames.map(normalizeForCompare);
+				relevantSpecializations = facultySpecializationsList.filter(spec => 
+					spec.type === 'faculty' && currentFacultyNamesNorm.includes(normalizeForCompare(spec.name))
+				);
+                console.log('Filtered faculty for current slide:', relevantSpecializations.length, 'from', currentFacultyNames.length, 'displayed members');
+                
+                // If no faculty specializations found for current slide, check if we're showing all faculty specializations
+                if (relevantSpecializations.length === 0) {
+                    // Show all faculty specializations (excluding administrators) ordered by hierarchy
+                    relevantSpecializations = facultySpecializationsList.filter(spec => spec.type === 'faculty');
+                    console.log('No matching faculty found for current slide, showing all faculty specializations:', relevantSpecializations.length);
+                }
+            } else {
+                // For other sections, don't show specializations as they're not relevant
+                relevantSpecializations = [];
+                console.log('No specializations for non-faculty/admin section:', currentSection.type);
+            }
+            
+            if (relevantSpecializations.length > 0) {
+                // Stop current slideshow and start new one
+                stopFacultySlideshow();
+                console.log('Starting synchronized slideshow with', relevantSpecializations.length, 'specializations');
+                startSynchronizedFacultySlideshow(relevantSpecializations, false); // false = synchronized mode
+            } else {
+                console.log('No specializations found for current slide members, showing placeholder');
+                // Show placeholder for no specializations found
+                showNoSpecializationsPlaceholder(currentSection);
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+            }
+        }
+        
+        function showNoSpecializationsPlaceholder(currentSection) {
+            const container = document.getElementById('specializationsContent');
+            if (!container) return;
+            
+            const sectionType = currentSection.type === 'admins' ? 'Administrators' : 
+                               currentSection.type === 'faculty' ? 'Faculty' : 
+                               'Members';
+            
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header" style="background: #006633;">${sectionType} Specializations</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px; width: 100%;">
+                        <div style="text-align: center; padding: 20px; color: #7B0000; opacity: 0.7;">
+                            <div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(123, 0, 0, 0.1); 
+                                        border: 3px dashed #7B0000; display: flex; align-items: center; justify-content: center; 
+                                        margin: 0 auto 20px; color: #7B0000; font-size: 1.5em;">
+                                <div style="text-align: center; line-height: 1.2;">
+                                    No<br>Specializations
+                                </div>
+                            </div>
+                            <div style="font-size: 1.1em; margin-bottom: 10px; color: #7B0000;">
+                                No specialization data available
+                            </div>
+                            <div style="font-size: 0.9em; color: #666; line-height: 1.4;">
+                                for the ${sectionType.toLowerCase()} currently displayed<br>
+                                in this slide
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startSynchronizedFacultySlideshow(specializations, unlockImmediately = false) {
+            isWaitingForSpecializations = true;
+            let localIndex = 0;
+            
+            // Store the original global list but don't modify it during slideshow
+            const originalList = facultySpecializationsList;
+            
+            // Show first card (use the filtered specializations directly)
+            currentFacultyIndex = 0;
+            showFacultyCardFromList(specializations, 0);
+            
+            // For org chart/individual admin slides, unlock immediately so center panel can advance
+            // while specializations run independently
+            if (unlockImmediately) {
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, 100); // Small delay to ensure first card is rendered
+            }
+            
+            // Start interval for this specific set
+            facultySlideInterval = setInterval(() => {
+                localIndex = (localIndex + 1) % specializations.length;
+                currentFacultyIndex = localIndex;
+                showFacultyCardFromList(specializations, localIndex);
+                
+                // If we've completed one full cycle of this section's specializations
+                if (localIndex === specializations.length - 1) {
+                    clearInterval(facultySlideInterval);
+                    
+                    // Only set flag to false if we're synchronized (not unlocked immediately)
+                    if (!unlockImmediately) {
+                        setTimeout(() => {
+                            isWaitingForSpecializations = false;
+                        }, slideIntervalDuration); // Wait configured interval after the last card
+                    }
+                }
+            }, slideIntervalDuration);
+        }
+        
+        function waitForFinalSpecializationsCompletion() {
+            // Wait for final specializations to complete, then return
+            const checkInterval = setInterval(() => {
+                if (!isWaitingForSpecializations) {
+                    clearInterval(checkInterval);
+                    setTimeout(() => {
+                        returnToOriginalSlideshow();
+                    }, 2000);
+                }
+            }, 1000);
+        }
+        
+        function showOrgSection(sections, container, index) {
+            const section = sections[index];
+            
+            // Handle org chart image display
+            if (section.type === 'org_chart_image') {
+                container.innerHTML = renderOrgChartImage(section);
+                return;
+            }
+            
+            // Handle individual administrator cards
+            if (section.type === 'individual_admin') {
+                container.innerHTML = renderIndividualAdmin(section);
+                return;
+            }
+            
+            // Check if this is an administrators section - show fixed "CCS ORGANIZATIONAL CHART" title
+            const isAdminSection = section.type === 'admins' || (section.title && section.title.includes('Administrator'));
+            
+            let html = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; width:100%; height:100%; min-height:100vh; overflow-y:auto; padding:60px 15px 20px; position:relative;">
+                    ${isAdminSection ? `
+                    <!-- Fixed CCS ORGANIZATIONAL CHART Title (only for administrators) -->
+                    <h1 style="font-size:3em; margin:0; color:#7B0000; text-align:center; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:bold; position:sticky; top:0; background:rgba(255,255,255,0.92); width:100%; padding:20px 0; z-index:10; backdrop-filter:blur(2px);">
+                        CCS ORGANIZATIONAL CHART
+                    </h1>
+                    ` : ''}
+                    <div style="display:flex; flex-direction:column; align-items:center; width:100%; max-width:1200px; min-height:calc(100vh - 120px); justify-content:flex-start; ${isAdminSection ? 'margin-top:20px;' : ''}">
+                        ${!isAdminSection ? `
+                        <h1 style="font-size:2.5em; margin-bottom:30px; color:#7B0000; text-align:center;">
+                            ${esc(section.title)}
+                        </h1>
+                        ` : ''}
+                        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:20px; width:100%; justify-items:center; align-items:start; padding:0 20px;">
+            `;
+            
+            section.members.forEach(member => {
+                const imagePath = section.type === 'admins' ? '../multimedia/faculty/' : 
+                                section.type === 'faculty' ? '../multimedia/faculty/' : 
+                                '../multimedia/officers/';
+                
+                html += `
+                    <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(10px); border:2px solid rgba(123,0,0,0.35); border-radius:15px; padding:16px; margin:6px; width:200px; text-align:center; transition:all 0.4s ease; transform:translateY(0); box-shadow:0 10px 30px rgba(123,0,0,0.45); display:flex; flex-direction:column; align-items:center;">
+                        ${member.file_path ? 
+                            `<img src="${imagePath}${esc(base(member.file_path))}" alt="${esc(member.title)}" style="width:120px; height:120px; border-radius:50%; margin:0 auto 15px; object-fit:cover; border:3px solid #7B0000; box-shadow:0 4px 16px rgba(123,0,0,0.3); transition:all 0.4s ease;">` :
+                            `<div style="width:120px; height:120px; border-radius:50%; background:#7B0000; border:3px solid #7B0000; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:2.5em; font-weight:bold; box-shadow:0 4px 16px rgba(123,0,0,0.3);">${esc(member.title.charAt(0))}</div>`
+                        }
+                        <div style="font-size:1.1em; color:#7B0000; margin-bottom:4px; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; line-height:1.3; min-height:2.6em; width:100%;">
+                            ${esc(member.title)}
+                        </div>
+                        <div style="font-size:0.9em; color:#7B0000; margin-bottom:4px; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; line-height:1.3; min-height:3.9em; width:100%;">
+                            ${esc(member.position || member.description)}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        /**
+         * Renders the organization chart as a simple centered image
+         * @param {Object} section - The section containing image data
+         */
+        function renderOrgChartImage(section) {
+            const imagePath = section.image_path || 'images/organization-chart.jpg';
+            
+            let html = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; width:100%; height:100%; min-height:100vh; overflow-y:auto; padding:20px 5px 10px;">
+                    <div style="display:flex; flex-direction:column; align-items:center; width:100%; max-width:100%; min-height:calc(100vh - 30px); justify-content:flex-start; gap:20px;">
+                        <!-- Chart Title -->
+                        <h1 style="font-size:3em; margin:0; color:#7B0000; text-align:center; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:bold;">
+                            ${esc(section.title)}
+                        </h1>
+                        
+                        <!-- Organization Chart Image -->
+                        <img src="${imagePath}" alt="Organization Chart" 
+                             style="width:85%; height:auto; max-height:75vh; object-fit:contain;">
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        /**
+         * Renders an individual administrator display - simple centered layout
+         * Shows the picture and information without card styling
+         * @param {Object} section - The section containing administrator data
+         */
+        function renderIndividualAdmin(section) {
+            const imagePath = '../multimedia/faculty/';
+            const hasImage = section.file_path && section.file_path.trim() !== '';
+            const hasDescription = section.description && section.description !== null && section.description.trim() !== '';
+            const hasSpecialization = section.specialization !== null && section.specialization !== undefined && section.specialization.trim() !== '';
+            
+            // Debug logging
+            console.log('Individual Admin Data:', {
+                title: section.title,
+                position: section.position,
+                description: section.description,
+                specialization: section.specialization,
+                hasDescription: hasDescription,
+                hasSpecialization: hasSpecialization
+            });
+            
+            let html = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; width:100%; height:100%; min-height:100vh; overflow-y:auto; padding:55px 10px 20px; position:relative;">
+                    <!-- Fixed CCS ORGANIZATIONAL CHART Title (for individual administrators) -->
+                    <h1 style="font-size:3em; margin:0; color:#7B0000; text-align:center; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:bold; position:sticky; top:0; background:rgba(255,255,255,0.92); width:100%; padding:20px 0; z-index:10; backdrop-filter:blur(2px);">
+                        CCS ORGANIZATIONAL CHART
+                    </h1>
+                    <div style="display:flex; flex-direction:column; align-items:center; width:100%; max-width:100%; justify-content:flex-start; gap:25px; margin-top:20px;">
+                        
+                        <!-- Profile Image -->
+                        ${hasImage ? 
+                            `<img src="${imagePath}${esc(base(section.file_path))}" alt="${esc(section.title)}" 
+                                  style="width:320px; height:320px; border-radius:50%; object-fit:cover; 
+                                         border:6px solid #7B0000; box-shadow:0 15px 40px rgba(123,0,0,0.6);">` :
+                            `<div style="width:320px; height:320px; border-radius:50%; background:linear-gradient(135deg, #7B0000 0%, #5a0000 100%); 
+                                        border:6px solid #7B0000; display:flex; align-items:center; justify-content:center; 
+                                        color:#fff; font-size:7em; font-weight:bold; box-shadow:0 15px 40px rgba(123,0,0,0.6);
+                                        text-shadow:2px 2px 4px rgba(0,0,0,0.5);">
+                                ${esc(section.title.charAt(0))}
+                            </div>`
+                        }
+                        
+                        <!-- Name -->
+                        <div style="font-size:2.8em; color:#7B0000; font-weight:bold; line-height:1.2; text-align:center;
+                                    text-shadow:2px 2px 4px rgba(0,0,0,0.2); margin-top:10px;">
+                            ${esc(section.title)}
+                        </div>
+                        
+                        <!-- Position -->
+                        <div style="font-size:1.8em; color:#7B0000; font-weight:500; line-height:1.4; text-align:center;
+                                    max-width:90%; margin-top:5px;">
+                            ${esc(section.position)}
+                        </div>
+                        
+                        <!-- Specialization (if available) -->
+                        ${hasSpecialization ? `
+                            <div style="display:flex; flex-direction:column; align-items:center; gap:15px; margin-top:15px;">
+                                <div style="font-size:1.1em; color:rgba(123,0,0,0.7); font-weight:600; 
+                                            text-transform:uppercase; letter-spacing:1.5px;">
+                                    ${section.specialization.includes(',') || section.specialization.includes(';') ? 'Specializations' : 'Specialization'}
+                                </div>
+                                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:90%;">
+                                    ${section.specialization.split(/[,;]+/).map(spec => spec.trim()).filter(spec => spec).map(spec => `
+                                        <div style="font-size:1.2em; color:#7B0000; font-weight:500; 
+                                                    padding:10px 24px; background:rgba(123,0,0,0.1); 
+                                                    border-radius:25px; border:2px solid #7B0000;
+                                                    box-shadow:0 4px 12px rgba(123,0,0,0.3);
+                                                    white-space:nowrap;">
+                                            ${esc(spec)}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <!-- Description (if available) -->
+                        ${hasDescription ? `
+                            <div style="margin-top:20px; max-width:85%; text-align:center;">
+                                <div style="font-size:1.3em; color:#7B0000; line-height:1.8; letter-spacing:0.3px;">
+                                    ${esc(section.description)}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        /**
+         * Legacy function - kept for reference but no longer used
+         * Renders the hierarchical organizational chart for college administration
+         * Displays members in a structured hierarchy: Dean -> Program Head -> Coordinators
+         * @param {Object} section - The section containing member data
+         */
+        function renderHierarchicalOrgChart(section) {
+            const members = section.members;
+            const imagePath = '../multimedia/faculty/';
+            
+            // Track members already assigned to higher positions to avoid duplicates
+            const assignedMembers = new Set();
+            
+            // Categorize members by their positions in the organizational hierarchy
+            // Level 1: College Dean (top position)
+            const collegeDean = members.find(member => 
+                member.position && member.position.toLowerCase().includes('college dean')
+            );
+            if (collegeDean) {
+                assignedMembers.add(collegeDean.title);
+            }
+            
+            // Level 2: Program Head (reports to Dean)
+            const programHead = members.find(member => 
+                member.position && member.position.toLowerCase().includes('program head') &&
+                !assignedMembers.has(member.title)
+            );
+            if (programHead) {
+                assignedMembers.add(programHead.title);
+            }
+            
+            // Level 3: Coordinators (Report directly to Program Head)
+            // Exclude members already assigned to higher positions (Dean or Program Head)
+            const coordinators = members.filter(member => 
+                member.position && 
+                !assignedMembers.has(member.title) &&
+                (
+                    member.position.toLowerCase().includes('coordinator') ||
+                    member.position.toLowerCase().includes('soci coordinator') ||
+                    member.position.toLowerCase().includes('research coordinator') ||
+                    member.position.toLowerCase().includes('practicum coordinator') ||
+                    member.position.toLowerCase().includes('alumni coordinator')
+                )
+            );
+            
+            /**
+             * Creates a member card with horizontal layout (image left, text right)
+             * @param {Object} member - The member data object
+             * @param {string} level - The hierarchy level ('dean' for special styling)
+             * @returns {string} HTML string for the member card
+             */
+            function createMemberCard(member, level = '') {
+                // Define card styling based on hierarchy level
+                const cardStyle = level === 'dean' ? 
+                    'background:rgba(255,255,255,0.1); backdrop-filter:blur(15px); border:3px solid #7B0000; border-radius:20px; padding:20px; margin:10px; width:400px; transition:all 0.4s ease; transform:translateY(0); box-shadow:0 15px 40px rgba(123,0,0,0.6); display:flex; flex-direction:row; align-items:center; gap:20px;' :
+                    'background:rgba(255,255,255,0.08); backdrop-filter:blur(12px); border:2px solid rgba(123,0,0,0.5); border-radius:18px; padding:18px; margin:8px; width:360px; transition:all 0.4s ease; transform:translateY(0); box-shadow:0 12px 35px rgba(123,0,0,0.5); display:flex; flex-direction:row; align-items:center; gap:18px;';
+                
+                // Set image and text sizes based on hierarchy level
+                const imageSize = level === 'dean' ? '120px' : '100px';
+                const nameFontSize = level === 'dean' ? '1.4em' : '1.2em';
+                const positionFontSize = level === 'dean' ? '1.1em' : '1em';
+                
+                return `
+                    <div style="${cardStyle}">
+                        <!-- Profile Image (left side) -->
+                        ${member.file_path ? 
+                            `<img src="${imagePath}${esc(base(member.file_path))}" alt="${esc(member.title)}" style="width:${imageSize}; height:${imageSize}; border-radius:50%; object-fit:cover; border:3px solid #7B0000; box-shadow:0 4px 16px rgba(123,0,0,0.3); transition:all 0.4s ease; flex-shrink:0;">` :
+                            `<div style="width:${imageSize}; height:${imageSize}; border-radius:50%; background:#7B0000; border:3px solid #7B0000; display:flex; align-items:center; justify-content:center; color:#fff; font-size:2.5em; font-weight:bold; box-shadow:0 4px 16px rgba(123,0,0,0.3); flex-shrink:0;">${esc(member.title.charAt(0))}</div>`
+                        }
+                        <!-- Text Content (right side) -->
+                        <div style="display:flex; flex-direction:column; justify-content:center; flex:1; min-width:0;">
+                            <!-- Member Name -->
+                            <div style="font-size:${nameFontSize}; color:#7B0000; margin-bottom:8px; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; line-height:1.3; min-height:2.6em; font-weight:bold;">
+                                ${esc(member.title)}
+                            </div>
+                            <!-- Member Position -->
+                            <div style="font-size:${positionFontSize}; color:#7B0000; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; line-height:1.3; min-height:2.6em; font-weight:normal;">
+                                ${esc(member.position || member.description)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            /**
+             * Creates a coordinator card with portrait/vertical layout (image top, text bottom)
+             * @param {Object} member - The coordinator data object
+             * @returns {string} HTML string for the coordinator card
+             */
+            function createCoordinatorCard(member) {
+                const cardStyle = 'background:rgba(255,255,255,0.08); backdrop-filter:blur(12px); border:2px solid rgba(123,0,0,0.5); border-radius:15px; padding:15px; margin:8px; width:190px; height:295px; transition:all 0.4s ease; transform:translateY(0); box-shadow:0 12px 35px rgba(123,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:12px;';
+                const imageSize = '110px';
+                const nameFontSize = '0.95em';
+                const positionFontSize = '0.85em';
+                
+                return `
+                    <div style="${cardStyle}">
+                        <!-- Profile Image (top) -->
+                        ${member.file_path ? 
+                            `<img src="${imagePath}${esc(base(member.file_path))}" alt="${esc(member.title)}" style="width:${imageSize}; height:${imageSize}; border-radius:50%; object-fit:cover; border:3px solid #7B0000; box-shadow:0 4px 16px rgba(123,0,0,0.3); transition:all 0.4s ease;">` :
+                            `<div style="width:${imageSize}; height:${imageSize}; border-radius:50%; background:#7B0000; border:3px solid #7B0000; display:flex; align-items:center; justify-content:center; color:#fff; font-size:2.5em; font-weight:bold; box-shadow:0 4px 16px rgba(123,0,0,0.3);">${esc(member.title.charAt(0))}</div>`
+                        }
+                        <!-- Text Content (bottom) -->
+                        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; width:100%; flex:1; justify-content:center;">
+                            <!-- Member Name -->
+                            <div style="font-size:${nameFontSize}; color:#7B0000; margin-bottom:6px; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; line-height:1.3; font-weight:bold; width:100%;">
+                                ${esc(member.title)}
+                            </div>
+                            <!-- Member Position -->
+                            <div style="font-size:${positionFontSize}; color:#7B0000; white-space:normal; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; line-height:1.3; font-weight:normal; width:100%;">
+                                ${esc(member.position || member.description)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Build the complete organizational chart HTML structure
+            let html = `
+                <!-- Main Chart Container -->
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; width:100%; height:100%; min-height:100vh; overflow-y:auto; padding:40px 15px 20px;">
+                    <div style="display:flex; flex-direction:column; align-items:center; width:100%; max-width:1400px; min-height:calc(100vh - 80px); justify-content:flex-start;">
+                        <!-- Chart Title -->
+                        <h1 style="font-size:3em; margin-bottom:40px; color:#7B0000; text-align:center; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:bold;">
+                            CCS ORGANIZATIONAL CHART
+                        </h1>
+                        
+                        <!-- Organizational Chart Container -->
+                        <div style="display:flex; flex-direction:column; align-items:center; width:100%; position:relative;">
+                            
+                            <!-- Level 1: College Dean (Top of hierarchy) -->
+                            ${collegeDean ? `
+                                <div style="display:flex; justify-content:center; margin-bottom:0px;">
+                                    ${createMemberCard(collegeDean, 'dean')}
+                                </div>
+                                <!-- Vertical connector line from Dean to Program Head -->
+                                <div style="width:4px; height:40px; background:#7B0000; margin-bottom:0px; box-shadow:0 2px 8px rgba(123,0,0,0.4);"></div>
+                            ` : ''}
+                            
+                            <!-- Level 2: Program Head (Reports to Dean) -->
+                            ${programHead ? `
+                                <div style="display:flex; justify-content:center; margin-bottom:0;">
+                                    ${createMemberCard(programHead)}
+                                </div>
+                            ` : ''}
+                            
+                             <!-- Level 3: Coordinators (Report directly to Program Head) -->
+                             ${coordinators.length > 0 ? `
+                                 <!-- Coordinators container -->
+                                 <div style="display:flex; flex-direction:column; align-items:center;">
+                                     <!-- Vertical connector line from Program Head to horizontal line -->
+                                     <div style="width:4px; height:40px; background:#7B0000; margin-bottom:0; box-shadow:0 2px 8px rgba(123,0,0,0.4);"></div>
+                                     
+                                     <!-- Wrapper for coordinators with horizontal line -->
+                                     <div style="display:flex; justify-content:center; align-items:flex-start; gap:15px; position:relative;">
+                                         ${coordinators.map((coordinator, index) => `
+                                             <div style="display:flex; flex-direction:column; align-items:center; position:relative;">
+                                                 <!-- Vertical stem connecting horizontal line to card -->
+                                                 <div style="width:4px; height:30px; background:#7B0000; margin-bottom:0; box-shadow:0 2px 8px rgba(123,0,0,0.4); position:relative; z-index:2;"></div>
+                                                 ${createCoordinatorCard(coordinator)}
+                                                 ${index < coordinators.length - 1 ? `
+                                                     <!-- Horizontal connector to next coordinator -->
+                                                     <div style="position:absolute; top:0; left:50%; width:220px; height:4px; background:#7B0000; box-shadow:0 2px 8px rgba(123,0,0,0.4); z-index:1;"></div>
+                                                 ` : ''}
+                                             </div>
+                                         `).join('')}
+                                     </div>
+                                 </div>
+                             ` : ''}
+                            
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        function returnToOriginalSlideshow() {
+            // Enter guarded transition state and stop hero interval to avoid stray ticks
+            isReturningToSlideshow = true;
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+            // Stop all slideshows
+            stopFacultySlideshow();
+            stopOfficerSlideshow();
+            isOrgChartsActive = false;
+            
+            // Restore the center panel to normal size
+            const centerPanel = document.querySelector('.center');
+            centerPanel.classList.remove('expanded');
+            
+            // Show the left panel again
+            const leftPanel = document.querySelector('.left');
+            leftPanel.style.opacity = '1';
+            leftPanel.style.pointerEvents = 'auto';
+            
+            // Show the right panel again and remove specializations panel
+            const rightPanel = document.querySelector('.panel.right');
+            rightPanel.style.opacity = '1';
+            rightPanel.style.pointerEvents = 'auto';
+            
+            // Remove specializations panel if it exists - more aggressive cleanup
+            const specializationsPanel = document.getElementById('specializationsPanel');
+            if (specializationsPanel) {
+                specializationsPanel.remove();
+                console.log('Removed specializations panel during return to slideshow');
+            }
+            
+            // Additional cleanup: remove any lingering specializations panels
+            const allSpecializationsPanels = document.querySelectorAll('[id^="specializations"]');
+            allSpecializationsPanels.forEach(panel => {
+                if (panel.id !== 'specializationsPanel') { // Don't remove main panel that may be legitimate
+                    panel.remove();
+                    console.log('Removed lingering specializations panel:', panel.id);
+                }
+            });
+            
+            // Reset the right panel to show previous slide
+            const rightContainer = document.getElementById('facultyOfficers');
+            renderPreviousSlide(rightContainer);
+            
+            // Reset slideshow completed flag
+            slideshowCompleted = false;
+
+            // Immediately restart the original slideshow without waiting on network
+            if (Array.isArray(originalSlides) && originalSlides.length > 0) {
+                currentSlideIndex = 0;
+                if (originalSlides.length > 1) {
+                    previousSlide = originalSlides[originalSlides.length - 1];
+                    updatePreviousSlideDisplay(previousSlide);
+                }
+                // Exit transition guard right before resuming hero updates
+                isReturningToSlideshow = false;
+                showSlide(originalSlides, 0);
+                startSlideshow(originalSlides);
+            } else {
+                // If we somehow have no slides, fall back to org charts
+                expandCenterPanel();
+            }
+
+            // Refresh data in the background to update lists for the next cycle
+            setTimeout(() => { refreshDataBackground(); }, 0);
+        }
+
+        // Background data refresh that does NOT interrupt the running slideshow
+        async function refreshDataBackground() {
+            try {
+                const res = await fetch(API_URL);
+                const json = await res.json();
+                if (json.status !== 'success') return;
+
+                const items = json.data;
+                
+                if (Array.isArray(json.specializations)) {
+                    facultySpecializationsList = json.specializations;
+                }
+
+                // Update lists on the left/right panels
+                renderLists(items);
+                renderFacultyOfficers(items);
+
+                // Prepare next-cycle slides but do NOT restart current slideshow
+                const eventSlides = items.filter(i => i.type === 'events');
+                const grouped = items.filter(i => i.type === 'announcements_group')
+                    .flatMap(g => g.announcements || [])
+                    .filter(a => !a.file_path);
+                const announcementSingles = items.filter(i => i.type === 'announcements');
+                const announcementSlides = [...announcementSingles, ...grouped];
+                originalSlides = [...eventSlides, ...announcementSlides];
+            } catch (_) {
+// Silently ignore background refresh errors
+            }
+        }
+        
+        // Function to manually refresh marquee (useful for testing or admin purposes)
+        function refreshMarquee() {
+            console.log('Manually refreshing marquee...');
+            // Force refresh by loading new data and updating silently
+            loadMarqueeDataSilently().then(newData => {
+                if (newData) {
+                    updateMarqueeContentSilently(newData);
+                }
+            });
+        }
+        
+        // Expose refreshMarquee globally for debugging/testing
+        window.refreshMarquee = refreshMarquee;
+        
+        async function loadFreshDataAndRestart() {
+            try {
+                const res = await fetch(API_URL);
+                const json = await res.json();
+                if(json.status !== 'success') throw new Error('Failed to load fresh data');
+                
+                const items = json.data;
+                
+                // Update marquee with fresh news (force update for fresh data)
+                if (json.welcome_and_news) {
+                    updateMarqueeContentSilently(json.welcome_and_news);
+                }
+                
+                // Update specializations data
+                if (json.specializations) {
+                    facultySpecializationsList = json.specializations;
+                    console.log('Updated specializations data:', facultySpecializationsList.length, 'items');
+                }
+                
+                // Update lists with fresh data
+                renderLists(items);
+                renderFacultyOfficers(items);
+                
+                // Prepare fresh slides data using the same interleaving logic
+                const mediaItems = items.filter(i => i.file_path);
+                const announcementItems = items.filter(i => i.type === 'announcements' && !i.file_path);
+                const eventItems = items.filter(i => i.type === 'events' && !i.file_path);
+                const groupedAnnouncements = items.filter(i => i.type === 'announcements_group')
+                    .flatMap(g => g.announcements || [])
+                    .filter(a => !a.file_path);
+                
+                // Use the same ordering as renderHero: events then announcements
+                const freshSlides = [];
+                const eventSlides = items.filter(i => i.type === 'events');
+                const grouped = items.filter(i => i.type === 'announcements_group')
+                    .flatMap(g => g.announcements || [])
+                    .filter(a => !a.file_path);
+                const announcementSingles = items.filter(i => i.type === 'announcements');
+                const announcementSlides = [...announcementSingles, ...grouped];
+
+                freshSlides.push(...eventSlides, ...announcementSlides);
+
+                originalSlides = freshSlides;
+                
+                console.log('Fresh data loaded - starting new cycle with', originalSlides.length, 'slides');
+                
+                // Start the slideshow with fresh data
+                setTimeout(() => {
+                    // Critical cleanup: ensure specializations panels are removed before starting slideshow
+                    const specializationsPanel = document.getElementById('specializationsPanel');
+                    if (specializationsPanel) {
+                        specializationsPanel.remove();
+                        console.log('Removed specializations panel before slideshow start');
+                    }
+                    
+                    // Stop any running specializations intervals to prevent overlap
+                    stopFacultySlideshow();
+                    stopOfficerSlideshow();
+                    
+                    if (originalSlides.length > 0) {
+                        currentSlideIndex = 0;
+                        // Reset previous slide to show last slide from array
+                        if (originalSlides.length > 1) {
+                            previousSlide = originalSlides[originalSlides.length - 1];
+                            updatePreviousSlideDisplay(previousSlide);
+                        }
+                        showSlide(originalSlides, 0);
+                        startSlideshow(originalSlides);
+                    } else {
+                        console.log('No slides available after refresh - expanding to organization charts');
+                        expandCenterPanel();
+                    }
+                }, 800); // Wait for transition to complete
+                
+            } catch (error) {
+                console.error('Error loading fresh data:', error);
+                // Fallback to original slides if refresh fails
+                if (originalSlides.length > 0) {
+                    setTimeout(() => {
+                        currentSlideIndex = 0;
+                        showSlide(originalSlides, 0);
+                        startSlideshow(originalSlides);
+                    }, 800);
+                }
+            }
+        }
+
+        function updateSpecializationsPanelPosition() {
+            const specializationsPanel = document.getElementById('specializationsPanel');
+            if (!specializationsPanel) return;
+            
+            const centerPanel = document.querySelector('.center');
+            const centerRect = centerPanel.getBoundingClientRect();
+            const screenRect = document.querySelector('.screen').getBoundingClientRect();
+            const gap = 10; // match grid gap
+            const pullIn = 8; // move panel slightly left
+            const rightPanelLeft = centerRect.right + gap - pullIn;
+            const viewportRight = window.innerWidth - gap; // keep a small gutter to the viewport edge
+            const containerRight = Math.min(screenRect.right, viewportRight);
+            const availableWidth = Math.max(320, containerRight - rightPanelLeft);
+            
+            specializationsPanel.style.left = `${rightPanelLeft}px`;
+            specializationsPanel.style.top = `${centerRect.top}px`;
+            specializationsPanel.style.height = `${centerRect.height}px`;
+            specializationsPanel.style.width = `${availableWidth}px`;
+        }
+
+        function createSpecializationsPanel() {
+            // Remove existing specializations panel if it exists
+            const existingPanel = document.getElementById('specializationsPanel');
+            if (existingPanel) {
+                existingPanel.remove();
+            }
+            
+            // Create new specializations panel
+            const screen = document.querySelector('.screen');
+            const specializationsPanel = document.createElement('div');
+            specializationsPanel.id = 'specializationsPanel';
+            specializationsPanel.className = 'panel';
+            // Get center panel dimensions for height matching
+            const centerPanel = document.querySelector('.center');
+            const centerRect = centerPanel.getBoundingClientRect();
+            const topbarHeight = document.querySelector('.topbar').getBoundingClientRect().height;
+            
+            // Calculate position to align with center panel
+            const screenRect = document.querySelector('.screen').getBoundingClientRect();
+            const gap = 10; // match grid gap
+            const pullIn = 8; // move panel slightly left
+            const rightPanelLeft = centerRect.right + gap - pullIn; // reduced gap from center panel
+            const viewportRight = window.innerWidth - gap; // keep a small gutter to the viewport edge
+            const containerRight = Math.min(screenRect.right, viewportRight);
+            const availableWidth = Math.max(320, containerRight - rightPanelLeft);
+            
+            specializationsPanel.style.cssText = `
+                position: fixed;
+                left: ${rightPanelLeft}px;
+                top: ${centerRect.top}px;
+                height: ${centerRect.height}px;
+                width: ${availableWidth}px;
+                z-index: 1000;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.8s ease-in-out;
+            `;
+            
+            // Add content structure
+            specializationsPanel.innerHTML = `
+                <div id="specializationsContent" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div style="text-align: center; padding: 40px; color: #7B0000;">
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">Loading specializations...</div>
+                    </div>
+                </div>
+            `;
+            
+            // Add to DOM
+            screen.appendChild(specializationsPanel);
+            
+            // Trigger animation
+            setTimeout(() => {
+                specializationsPanel.style.opacity = '1';
+                specializationsPanel.style.transform = 'translateX(0)';
+                
+                // Load specializations data
+                loadSpecializationsData();
+                
+                // Update position after animation
+                setTimeout(updateSpecializationsPanelPosition, 100);
+            }, 100);
+        }
+        
+        function loadSpecializationsData() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(json => {
+                    if(json.status === 'success' && json.specializations) {
+                        displaySpecializations(json.specializations);
+                    } else {
+                        // Fallback if no specializations endpoint
+                        displayDefaultSpecializations();
+                    }
+                    // Store previous officers (non-selected partylists) for officers section
+                    if (json.status === 'success' && Array.isArray(json.previous_officers)) {
+                        window.previousOfficersData = json.previous_officers;
+                    } else {
+                        window.previousOfficersData = [];
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading specializations:', error);
+                    displayDefaultSpecializations();
+                });
+        }
+        
+        let currentFacultyIndex = 0;
+        let facultySlideInterval;
+        let facultySpecializationsList = [];
+        
+        function displaySpecializations(specializations) {
+            const container = document.getElementById('specializationsContent');
+            if (!container) {
+                return; // Panel not available; skip to avoid errors during transitions
+            }
+            
+            // Store specializations for slideshow
+            facultySpecializationsList = specializations;
+            
+            if (specializations.length === 0) {
+                displayDefaultSpecializations();
+                return;
+            }
+            
+            // Create container for individual faculty cards
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header" style="background: #006633;">Faculty Specializations</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px; width: 100%;">
+                        <div id="facultyCard" style="width: 100%; max-width: 320px; text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.6s ease;">
+                            <!-- Faculty card content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show loading state until synchronization starts
+            const facultyCard = document.getElementById('facultyCard');
+            facultyCard.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <div style="width: 150px; height: 150px; border-radius: 50%; background: rgba(123, 0, 0, 0.1); 
+                                border: 4px dashed #7B0000; display: flex; align-items: center; justify-content: center;">
+                        <div style="color: #7B0000; font-size: 1.2em; text-align: center;">
+                            Waiting for<br>Organization Charts
+                        </div>
+                    </div>
+                </div>
+            `;
+            facultyCard.style.opacity = '1';
+            facultyCard.style.transform = 'translateY(0)';
+        }
+        
+        function showFacultyCard(index) {
+            showFacultyCardFromList(facultySpecializationsList, index);
+        }
+        
+        function showFacultyCardFromList(specializationsList, index) {
+            const facultyCard = document.getElementById('facultyCard');
+            const facultyCounter = document.getElementById('facultyCounter');
+            const faculty = specializationsList[index];
+            
+            if (!faculty) return;
+            
+            // Check if facultyCard element exists before accessing its properties
+            if (!facultyCard) {
+                console.warn('facultyCard element not found, skipping faculty card update');
+                return;
+            }
+            
+            // Fade out current card
+            facultyCard.style.opacity = '0';
+            facultyCard.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                // Update content
+                facultyCard.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                        <!-- Profile Picture -->
+                        <div style="position: relative;">
+                            ${faculty.file_path ? 
+                                `<img src="../multimedia/faculty/${esc(base(faculty.file_path))}" alt="${esc(faculty.name)}" 
+                                     style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; 
+                                            border: 4px solid #7B0000; box-shadow: 0 8px 32px rgba(123, 0, 0, 0.2);">` :
+                                `<div style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #7B0000, #9B1000); 
+                                            border: 4px solid #7B0000; display: flex; align-items: center; justify-content: center; 
+                                            color: #fff; font-size: 3em; font-weight: bold; box-shadow: 0 8px 32px rgba(123, 0, 0, 0.2);">
+                                     ${esc(faculty.name.charAt(0))}</div>`
+                            }
+                        </div>
+                        
+                        <!-- Name -->
+                        <div style="color: #7B0000; font-size: 1.4em; font-weight: 700; line-height: 1.3; text-align: center; margin-bottom: 5px;">
+                            ${esc(faculty.name)}
+                        </div>
+                        
+                        <!-- Position -->
+                        ${faculty.position && faculty.position.trim() ? `
+                            <div style="color: #7B0000; font-size: 1.1em; font-weight: 600; line-height: 1.3; text-align: center; margin-bottom: 8px; min-height: 1.3em;">
+                                ${esc(faculty.position)}
+                            </div>
+                        ` : ''}
+                        
+                        <!-- Description -->
+                        ${faculty.description ? `
+                            <div style="color: #666; font-size: 1em; line-height: 1.4; text-align: center; margin-bottom: 15px; min-height: 2.8em; display: flex; align-items: center; justify-content: center;">
+                                ${esc(faculty.description)}
+                            </div>
+                        ` : ''}
+                        
+                        <!-- Specialization -->
+                        ${faculty.specialization ? `
+                            <div style="background: linear-gradient(135deg, rgba(123, 0, 0, 0.1), rgba(123, 0, 0, 0.15)); 
+                                        border-radius: 16px; padding: 15px 20px; border-left: 4px solid #7B0000; 
+                                        box-shadow: 0 4px 16px rgba(123, 0, 0, 0.1); width: 100%;">
+                                <div style="color: #7B0000; font-size: 0.9em; font-weight: 600; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                    Specialization
+                                </div>
+                                <div style="color: #7B0000; font-size: 1.2em; font-weight: 700; line-height: 1.3;">
+                                    ${esc(String(faculty.specialization || '').replace(/\b\d+\s*[\.)-]?\s*/g, '').trim())}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                // Update counter
+                if (facultyCounter) {
+                    facultyCounter.textContent = `${index + 1} of ${specializationsList.length}`;
+                }
+                
+                // Fade in new card
+                setTimeout(() => {
+                    facultyCard.style.opacity = '1';
+                    facultyCard.style.transform = 'translateY(0)';
+                }, 100);
+            }, 300);
+        }
+        
+        function startFacultySlideshow() {
+            if (facultySlideInterval) clearInterval(facultySlideInterval);
+            
+            facultySlideInterval = setInterval(() => {
+                currentFacultyIndex = (currentFacultyIndex + 1) % facultySpecializationsList.length;
+                showFacultyCard(currentFacultyIndex);
+            }, slideIntervalDuration); // Change faculty member using configured interval
+        }
+        
+        function stopFacultySlideshow() {
+            if (facultySlideInterval) {
+                clearInterval(facultySlideInterval);
+                facultySlideInterval = null;
+            }
+        }
+        
+        let currentOfficerIndex = 0;
+        let officerSlideInterval;
+        let officersList = [];
+        
+        function showOfficersInSpecializationsPanel(officers, headerTitle = 'Student Officers') {
+            isWaitingForSpecializations = true;
+            stopFacultySlideshow(); // Stop any existing slideshow
+            
+            officersList = officers;
+            
+            if (!officers || officers.length === 0) {
+                // No officers, advance after standard time
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+                return;
+            }
+            
+            const container = document.getElementById('specializationsContent');
+            if (!container) {
+                console.warn('Specializations container not found for officers display');
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+                return;
+            }
+            
+            // COMMENTED OUT: 2x2 grid layout for officers
+            /*
+            // Create container for quad officer cards (4 per slide)
+            const totalGroups = Math.ceil(officers.length / 4);
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header">Student Officers</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 15px; width: 100%;">
+                        <div id="officerCards" style="width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 15px; justify-items: center; opacity: 0; transform: translateY(20px); transition: all 0.6s ease;">
+                            <!-- Officer cards content will be inserted here -->
+                        </div>
+                        <div style="margin-top: 15px; color: #7B0000; font-size: 0.9em; opacity: 0.7;">
+                            <span id="officerCounter">Group 1 of ${totalGroups}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            */
+            
+            // NEW: List-type layout for officers
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header">${esc(headerTitle)}</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px; width: 100%; overflow-y: auto;">
+                        <div id="officersList" style="width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; justify-content: center;">
+                            <!-- Officer list content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // COMMENTED OUT: Start officer slideshow for 2x2 grid
+            /*
+            currentOfficerIndex = 0;
+            showOfficerCard(0);
+            startOfficerSlideshow();
+            */
+            
+        // NEW: Display officers in list format by groups of 4
+        currentOfficerIndex = 0;
+        showOfficersListGroup(0);
+        startOfficersListSlideshow();
+        }
+        
+        // COMMENTED OUT: 2x2 grid showOfficerCard function
+        /*
+        function showOfficerCard(groupIndex) {
+            const officerCards = document.getElementById('officerCards');
+            const officerCounter = document.getElementById('officerCounter');
+            
+            // Calculate which officers to show (4 per group)
+            const startIndex = groupIndex * 4;
+            const officer1 = officersList[startIndex];
+            const officer2 = officersList[startIndex + 1];
+            const officer3 = officersList[startIndex + 2];
+            const officer4 = officersList[startIndex + 3];
+            
+            if (!officer1) return;
+            
+            // Fade out current cards
+            officerCards.style.opacity = '0';
+            officerCards.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                let cardsHtml = '';
+                
+                // First officer card
+                cardsHtml += createOfficerCardHtml(officer1, true);
+                
+                // Second officer card (if exists)
+                if (officer2) {
+                    cardsHtml += createOfficerCardHtml(officer2, false);
+                }
+                
+                // Third officer card (if exists)
+                if (officer3) {
+                    cardsHtml += createOfficerCardHtml(officer3, false);
+                }
+                
+                // Fourth officer card (if exists)
+                if (officer4) {
+                    cardsHtml += createOfficerCardHtml(officer4, false);
+                }
+                
+                officerCards.innerHTML = cardsHtml;
+                
+                // Update counter
+                if (officerCounter) {
+                    const totalGroups = Math.ceil(officersList.length / 4);
+                    const currentGroup = groupIndex + 1;
+                    const officersInThisGroup = [officer1, officer2, officer3, officer4].filter(o => o).length;
+                    const totalOfficersShown = Math.min(startIndex + officersInThisGroup, officersList.length);
+                    officerCounter.textContent = `Group ${currentGroup} of ${totalGroups} (${totalOfficersShown}/${officersList.length} officers)`;
+                }
+                
+                // Fade in new cards
+                setTimeout(() => {
+                    officerCards.style.opacity = '1';
+                    officerCards.style.transform = 'translateY(0)';
+                }, 100);
+            }, 300);
+        }
+        */
+        
+        // COMMENTED OUT: Vertical card layout for 2x2 grid
+        /*
+        function createOfficerCardHtml(officer, isFirst) {
+            if (!officer) return '';
+            
+            return `
+                <div style="width: 100%; max-width: 240px; display: flex; flex-direction: column; align-items: center; gap: 12px; 
+                            background: rgba(255,255,255,0.02); border-radius: 15px; padding: 20px 15px; 
+                            border: 1px solid rgba(123,0,0,0.1); box-shadow: 0 4px 16px rgba(123,0,0,0.05);
+                            min-height: 180px; justify-content: center;">
+                    <!-- Profile Picture -->
+                    <div style="flex-shrink: 0;">
+                        ${officer.file_path ? 
+                            `<img src="../multimedia/officers/${esc(base(officer.file_path))}" alt="${esc(officer.title || officer.name)}" 
+                                 style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; 
+                                        border: 3px solid #7B0000; box-shadow: 0 6px 20px rgba(123, 0, 0, 0.2);">` :
+                            `<div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #7B0000, #9B1000); 
+                                        border: 3px solid #7B0000; display: flex; align-items: center; justify-content: center; 
+                                        color: #fff; font-size: 1.6em; font-weight: bold; box-shadow: 0 6px 20px rgba(123, 0, 0, 0.2);">
+                                 ${esc((officer.title || officer.name || '').charAt(0))}</div>`
+                        }
+                    </div>
+                    
+                    <!-- Officer Info -->
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: center; width: 100%;">
+                        <!-- Name -->
+                        <div style="color: #7B0000; font-size: 1em; font-weight: 700; line-height: 1.2; 
+                                    overflow: hidden; text-overflow: ellipsis; display: -webkit-box; 
+                                    -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                            ${esc(officer.title || officer.name || '')}
+                        </div>
+                        
+                        <!-- Position -->
+                        <div style="color: #666; font-size: 0.8em; line-height: 1.3; 
+                                    overflow: hidden; text-overflow: ellipsis; display: -webkit-box; 
+                                    -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                            ${esc(officer.description || officer.position || '')}
+                        </div>
+                        
+                        <!-- Role Badge -->
+                        <div style="background: linear-gradient(135deg, rgba(123, 0, 0, 0.08), rgba(123, 0, 0, 0.12)); 
+                                    border-radius: 8px; padding: 4px 8px; border-left: 3px solid #7B0000; 
+                                    box-shadow: 0 2px 8px rgba(123, 0, 0, 0.1); margin: 0 auto; width: fit-content;">
+                            <div style="color: #7B0000; font-size: 0.65em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Student Officer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        */
+        
+        // NEW: List-type functions for officers by groups of 4
+        function showOfficersListGroup(groupIndex) {
+            const officersListElement = document.getElementById('officersList');
+            const officerCounter = document.getElementById('officerCounter');
+            
+            if (!officersListElement) {
+                console.warn('Officers list element not found, skipping officers group update');
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+                return;
+            }
+            
+            if (!officersList || officersList.length === 0) {
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration);
+                return;
+            }
+            
+            // Calculate which officers to show (4 per group)
+            const startIndex = groupIndex * 4;
+            const officersInGroup = officersList.slice(startIndex, startIndex + 4);
+            
+            if (officersInGroup.length === 0) return;
+            
+            // Fade out current list
+            officersListElement.style.opacity = '0';
+            officersListElement.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                // Generate list items for current group
+                let listHtml = '';
+                officersInGroup.forEach((officer, index) => {
+                    listHtml += createOfficerListItemHtml(officer, startIndex + index);
+                });
+                
+                // Set the content
+                officersListElement.innerHTML = listHtml;
+                
+                // No counter displayed
+                
+                // Fade in the list
+                setTimeout(() => {
+                    officersListElement.style.opacity = '1';
+                    officersListElement.style.transform = 'translateY(0)';
+                }, 100);
+            }, 300);
+        }
+        
+        function createOfficerListItemHtml(officer, index) {
+            if (!officer) return '';
+            
+            return `
+                <div style="width: 100%; display: flex; align-items: center; gap: 20px; 
+                            background: rgba(255,255,255,0.02); border-radius: 12px; padding: 18px; 
+                            border: 1px solid rgba(123,0,0,0.1); box-shadow: 0 3px 12px rgba(123,0,0,0.05);
+                            transition: all 0.3s ease; border-left: 4px solid #7B0000; justify-content: center;">
+                    
+                    <!-- Profile Picture -->
+                    <div style="flex-shrink: 0;">
+                        ${officer.file_path ? 
+                            `<img src="../multimedia/officers/${esc(base(officer.file_path))}" alt="${esc(officer.title || officer.name)}" 
+                                 style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; 
+                                        border: 3px solid #7B0000; box-shadow: 0 4px 15px rgba(123, 0, 0, 0.2);">` :
+                            `<div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #7B0000, #9B1000); 
+                                        border: 3px solid #7B0000; display: flex; align-items: center; justify-content: center; 
+                                        color: #fff; font-size: 1.6em; font-weight: bold; box-shadow: 0 4px 15px rgba(123, 0, 0, 0.2);">
+                                 ${esc((officer.title || officer.name || '').charAt(0))}</div>`
+                        }
+                    </div>
+                    
+                    <!-- Officer Info -->
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; text-align: center;">
+                        <!-- Full Name -->
+                        <div style="color: #7B0000; font-size: 1.2em; font-weight: 700; line-height: 1.3; 
+                                    word-wrap: break-word; hyphens: auto;">
+                            ${esc(officer.title || officer.name || '')}
+                        </div>
+                        
+                        <!-- Position -->
+                        <div style="color: #666; font-size: 1em; line-height: 1.4; 
+                                    word-wrap: break-word; hyphens: auto;">
+                            ${esc(officer.description || officer.position || '')}
+                        </div>
+                        
+                        <!-- Role Badge -->
+                        <div style="background: linear-gradient(135deg, rgba(123, 0, 0, 0.08), rgba(123, 0, 0, 0.12)); 
+                                    border-radius: 20px; padding: 8px 14px; border: 1px solid rgba(123, 0, 0, 0.2); 
+                                    box-shadow: 0 2px 8px rgba(123, 0, 0, 0.1); margin: 0 auto; width: fit-content;">
+                            <div style="color: #7B0000; font-size: 0.75em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Student Officer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // COMMENTED OUT: Slideshow function for 2x2 grid
+        /*
+        function startOfficerSlideshow() {
+            if (officerSlideInterval) clearInterval(officerSlideInterval);
+            
+            const totalGroups = Math.ceil(officersList.length / 4);
+            
+            officerSlideInterval = setInterval(() => {
+                currentOfficerIndex = (currentOfficerIndex + 1) % totalGroups;
+                showOfficerCard(currentOfficerIndex);
+                
+                // If we've completed one full cycle of officer groups
+                if (currentOfficerIndex === totalGroups - 1) {
+                    clearInterval(officerSlideInterval);
+                    
+                    setTimeout(() => {
+                        isWaitingForSpecializations = false;
+                    }, 8000); // Wait 8 seconds after the last group
+                }
+            }, 8000);
+        }
+        */
+        
+        // NEW: List slideshow function for groups of 4
+        function startOfficersListSlideshow() {
+            if (officerSlideInterval) clearInterval(officerSlideInterval);
+            
+            const totalGroups = Math.ceil(officersList.length / 4);
+            
+            console.log('Starting officers slideshow with', totalGroups, 'groups, using configured interval:', slideIntervalDuration, 'ms');
+            
+            if (totalGroups <= 1) {
+                // If only one group, just show it and advance after delay
+                setTimeout(() => {
+                    isWaitingForSpecializations = false;
+                }, slideIntervalDuration * 2.4); // Wait longer for single group (2.4x configured interval)
+                return;
+            }
+            
+            officerSlideInterval = setInterval(() => {
+                currentOfficerIndex = (currentOfficerIndex + 1) % totalGroups;
+                showOfficersListGroup(currentOfficerIndex);
+                
+                // If we've completed one full cycle of officer groups
+                if (currentOfficerIndex === totalGroups - 1) {
+                    clearInterval(officerSlideInterval);
+                    
+                    setTimeout(() => {
+                        isWaitingForSpecializations = false;
+                    }, slideIntervalDuration); // Wait configured interval after the last group
+                }
+            }, slideIntervalDuration); // Use configured slide interval from display configuration
+        }
+        
+        function stopOfficerSlideshow() {
+            if (officerSlideInterval) {
+                clearInterval(officerSlideInterval);
+                officerSlideInterval = null;
+            }
+        }
+        
+        // Helper function to get the current officer slide index (0-based)
+        // Counts only officer slides, not other org sections
+        function getCurrentOfficerSlideIndex() {
+            let officerIndex = 0;
+            // Count all officer slides up to and including the current index
+            for (let i = 0; i <= currentOrgSectionIndex; i++) {
+                if (orgSections[i] && (orgSections[i].type === 'officers' || orgSections[i].title && orgSections[i].title.includes('Officer'))) {
+                    officerIndex++;
+                }
+            }
+            // Return 0-based index (first officer slide = 0, second = 1, etc.)
+            return officerIndex - 1;
+        }
+        
+        // Mission & Vision Panel for Officers Section
+        function showMissionVisionPanel(officerSlideIndex = 0) {
+            // Mission & Vision is static - don't block center panel advancement
+            const container = document.getElementById('specializationsContent');
+            if (!container) {
+                console.warn('Specializations container not found for Mission & Vision display');
+                return;
+            }
+            
+            // Alternate between University (even index: 0, 2, 4...) and College (odd index: 1, 3, 5...)
+            const isUniversity = (officerSlideIndex % 2) === 0;
+            const showUniversity = isUniversity && (universityMission || universityVision);
+            const showCollege = !isUniversity && (collegeMission || collegeVision);
+            
+            // If the preferred one is empty, show the other one as fallback
+            const finalShowUniversity = showUniversity || (!showCollege && (universityMission || universityVision));
+            const finalShowCollege = showCollege || (!showUniversity && (collegeMission || collegeVision));
+            
+            // Display immediately without any loading state
+            // Order: University Mission & Vision for even slides, College Mission & Vision for odd slides
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header">Mission and Vision</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; gap: 20px; flex: 1; padding: 20px; width: 100%; overflow-y: auto;">
+                        ${finalShowUniversity ? `
+                        <!-- University Mission & Vision Section -->
+                        <div style="margin-bottom: 10px;">
+                            <h3 style="color: #7B0000; font-size: 1.1em; font-weight: 700; margin-bottom: 15px; text-align: center; border-bottom: 2px solid #7B0000; padding-bottom: 8px;">UNIVERSITY</h3>
+                            
+                            ${universityMission ? `
+                            <!-- University Mission -->
+                            <div style="background: rgba(123, 0, 0, 0.05); border-radius: 12px; padding: 20px; 
+                                        border-left: 4px solid #7B0000; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-bottom: 15px;">
+                                <div style="color: #7B0000; font-size: 1.1em; font-weight: 700; margin-bottom: 12px; 
+                                            display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.3em;">🎯</span>
+                                    <span>MISSION</span>
+                                </div>
+                                <div style="color: #333; font-size: 0.95em; line-height: 1.8; text-align: justify;">
+                                    ${esc(universityMission)}
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            ${universityVision ? `
+                            <!-- University Vision -->
+                            <div style="background: rgba(0, 102, 51, 0.05); border-radius: 12px; padding: 20px; 
+                                        border-left: 4px solid #006633; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="color: #006633; font-size: 1.1em; font-weight: 700; margin-bottom: 12px; 
+                                            display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.3em;">👁️</span>
+                                    <span>VISION</span>
+                                </div>
+                                <div style="color: #333; font-size: 0.95em; line-height: 1.8; text-align: justify;">
+                                    ${esc(universityVision)}
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                        
+                        ${finalShowCollege ? `
+                        <!-- College Mission & Vision Section -->
+                        <div>
+                            <h3 style="color: #7B0000; font-size: 1.1em; font-weight: 700; margin-bottom: 15px; text-align: center; border-bottom: 2px solid #7B0000; padding-bottom: 8px;">COLLEGE</h3>
+                            
+                            ${collegeMission ? `
+                            <!-- College Mission -->
+                            <div style="background: rgba(123, 0, 0, 0.05); border-radius: 12px; padding: 20px; 
+                                        border-left: 4px solid #7B0000; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); margin-bottom: 15px;">
+                                <div style="color: #7B0000; font-size: 1.1em; font-weight: 700; margin-bottom: 12px; 
+                                            display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.3em;">🎯</span>
+                                    <span>MISSION</span>
+                                </div>
+                                <div style="color: #333; font-size: 0.95em; line-height: 1.8; text-align: justify;">
+                                    ${esc(collegeMission)}
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            ${collegeVision ? `
+                            <!-- College Vision -->
+                            <div style="background: rgba(0, 102, 51, 0.05); border-radius: 12px; padding: 20px; 
+                                        border-left: 4px solid #006633; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="color: #006633; font-size: 1.1em; font-weight: 700; margin-bottom: 12px; 
+                                            display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.3em;">👁️</span>
+                                    <span>VISION</span>
+                                </div>
+                                <div style="color: #333; font-size: 0.95em; line-height: 1.8; text-align: justify;">
+                                    ${esc(collegeVision)}
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            // Mission & Vision is static - don't block center panel advancement
+            // The center panel can advance independently while Mission & Vision stays displayed
+        }
+        
+        function displayDefaultSpecializations() {
+            const container = document.getElementById('specializationsContent');
+            container.innerHTML = `
+                <div class="hierarchy-section" style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+                    <div class="hierarchy-header">Faculty Specializations</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px; width: 100%;">
+                        <div style="text-align: center; padding: 20px; color: #666;">
+                            <div style="font-size: 1.1em; margin-bottom: 10px;">Specialization data not available</div>
+                            <div style="font-size: 0.9em;">Please check database configuration</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLists(items){
+            // Announcements can arrive as individual media slides (type 'announcements')
+            // and also as grouped text-only announcements (type 'announcements_group').
+            const annSingles = items.filter(i => i.type === 'announcements');
+            const annGroups = items.filter(i => i.type === 'announcements_group').flatMap(g => g.announcements || []);
+            
+            // Combine and deduplicate by ID to prevent the same announcement showing multiple times
+            // This happens when announcements have multiple media files
+            const allAnns = [...annGroups, ...annSingles];
+            const seenIds = new Set();
+            const uniqueAnns = allAnns.filter(ann => {
+                const id = ann.id || ann.announcement_id; // Handle both id and announcement_id
+                if (id && seenIds.has(id)) {
+                    return false; // Skip duplicate
+                }
+                if (id) seenIds.add(id);
+                return true;
+            });
+            
+            // Separate admin and officer announcements
+            const adminAnns = uniqueAnns.filter(ann => ann.user_type === 'admin');
+            const officerAnns = uniqueAnns.filter(ann => ann.user_type === 'officer');
+            
+            const evts = items.filter(i => i.type === 'events');
+            const annList = document.getElementById('annList');
+            const evtList = document.getElementById('evtList');
+            
+            // Show only admin announcements in the left panel list
+            annList.innerHTML = adminAnns.map(a => `
+                <div class="list-item">
+                    <div class="title">${esc(a.title)}</div>
+                    <div class="meta">${esc(a.extra_info || a.date || '')}</div>
+                </div>
+            `).join('');
+            
+            evtList.innerHTML = evts.map(e => `
+                <div class="list-item">
+                    <div class="title">${esc(e.title)}</div>
+                    <div class="meta">${esc(e.extra_info || '')}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderMiniCards(items){
+            const right = document.getElementById('miniCards');
+            const cards = [];
+            // show up to four media items using DB-provided title/description
+            items.filter(i => i.file_path).slice(0,4).forEach((m) => {
+                const ext = m.file_path.split('.').pop().toLowerCase();
+                const src = `../multimedia/${m.type}/${base(m.file_path)}`;
+                const mediaTag = ['jpg','jpeg','png','gif','webp'].includes(ext)
+                    ? `<img src="${esc(src)}" alt="">`
+                    : `<div style="width:80px;height:80px;background:#eef3f8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#6b7c93;">MEDIA</div>`;
+                cards.push(`
+                    <div class="mini-card">
+                        ${mediaTag}
+                        <div>
+                            <div class="label">${esc((m.title || '').toString().toUpperCase())}</div>
+                            <div class="desc">${esc(m.description || m.extra_info || '')}</div>
+                        </div>
+                    </div>
+                `);
+            });
+            right.innerHTML = cards.join('');
+        }
+
+        function renderFacultyOfficers(items){
+            const container = document.getElementById('facultyOfficers');
+            
+            // Get officer announcements for the right panel
+            const annSingles = items.filter(i => i.type === 'announcements');
+            const annGroups = items.filter(i => i.type === 'announcements_group').flatMap(g => g.announcements || []);
+            const allAnns = [...annGroups, ...annSingles];
+            const seenIds = new Set();
+            const uniqueAnns = allAnns.filter(ann => {
+                const id = ann.id || ann.announcement_id;
+                if (id && seenIds.has(id)) {
+                    return false;
+                }
+                if (id) seenIds.add(id);
+                return true;
+            });
+            const officerAnns = uniqueAnns.filter(ann => ann.user_type === 'officer');
+            
+            // Create the right panel with officer announcements on top and previous slide on bottom
+            const html = `
+                ${officerAnns.length > 0 ? `
+                <div class="hierarchy-section">
+                    <div class="hierarchy-header">Officer Announcements</div>
+                    <div class="hierarchy-content" style="padding: 20px; max-height: 300px; overflow-y: auto;">
+                        ${officerAnns.map(ann => `
+                            <div style="background: rgba(123,0,0,0.08); border-radius: 8px; padding: 15px; margin-bottom: 12px; border-left: 3px solid #7B0000;">
+                                <div style="color: #7B0000; font-size: 1.1em; font-weight: 600; margin-bottom: 6px;">${esc(ann.title)}</div>
+                                ${ann.date ? `<div style="color: #888; font-size: 0.9em; margin-top: 8px; font-style: italic;">${esc(ann.date)}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
+                <div class="hierarchy-section">
+                    <div class="hierarchy-header">Previous Slide</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px;">
+                        <div id="previousSlideContent" style="width: 100%; text-align: center; opacity: 0.8;">
+                            <div style="color: #7B0000; font-size: 1.1em; margin-bottom: 10px;">No previous slide</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderPreviousSlide(container) {
+            const html = `
+                <div class="hierarchy-section">
+                    <div class="hierarchy-header">Previous Slide</div>
+                    <div class="hierarchy-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; padding: 20px;">
+                        <div id="previousSlideContent" style="width: 100%; text-align: center; opacity: 0.8;">
+                            <div style="color: #7B0000; font-size: 1.1em; margin-bottom: 10px;">No previous slide</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function updatePreviousSlideDisplay(slide) {
+            const container = document.getElementById('previousSlideContent');
+            if (!container || !slide) return;
+            
+            if (slide.file_path) {
+                const ext = slide.file_path.split('.').pop().toLowerCase();
+                const src = `../multimedia/${slide.type}/${base(slide.file_path)}`;
+                
+                if (['jpg','jpeg','png','gif','webp'].includes(ext)) {
+                    container.innerHTML = `
+                        <img src="${esc(src)}" alt="${esc(slide.title || '')}" 
+                             style="width: 100%; max-width: 450px; height: auto; border-radius: 12px; 
+                                    object-fit: cover; box-shadow: 0 6px 18px rgba(0,0,0,0.15); margin-bottom: 20px;">
+                        <div style="color: #7B0000; font-size: 1.2em; font-weight: 600; margin-bottom: 8px;">${esc(slide.title || '')}</div>
+                        <div style="color: #666; font-size: 1.3em; line-height: 1.5;">${esc(slide.description || slide.extra_info || '')}</div>
+                    `;
+                } else if (['mp4','webm','ogg'].includes(ext)) {
+                    container.innerHTML = `
+                        <video style="width: 100%; max-width: 450px; height: auto; border-radius: 12px; 
+                                   box-shadow: 0 6px 18px rgba(0,0,0,0.15); margin-bottom: 20px;" 
+                               muted loop autoplay>
+                            <source src="${esc(src)}" type="video/${ext}">
+                        </video>
+                        <div style="color: #7B0000; font-size: 1.2em; font-weight: 600; margin-bottom: 8px;">${esc(slide.title || '')}</div>
+                        <div style="color: #666; font-size: 1.3em; line-height: 1.5;">${esc(slide.description || slide.extra_info || '')}</div>
+                    `;
+                }
+            } else {
+                container.innerHTML = `
+                    <div style="color:#7B0000; padding:25px; text-align:center; background: rgba(123,0,0,0.05); border-radius: 12px; border-left: 4px solid #7B0000;">
+                        <h3 style="font-size:1.6em; margin-bottom:20px;">${esc(slide.title || '')}</h3>
+                        <p style="font-size:1.4em; line-height:1.6; color: #666;">${esc(slide.description || '')}</p>
+                        ${slide.extra_info ? `<p style="font-size:1.2em; margin-top:20px; opacity:0.8; font-style:italic;">${esc(slide.extra_info)}</p>` : ''}
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to create a stable content hash for comparison
+        function createContentHash(welcomeAndNews) {
+            let hash = '';
+            
+            if (welcomeAndNews && welcomeAndNews.welcome_message) {
+                hash += welcomeAndNews.welcome_message;
+            }
+            
+            if (welcomeAndNews && welcomeAndNews.news && welcomeAndNews.news.length > 0) {
+                welcomeAndNews.news.forEach(newsItem => {
+                    hash += newsItem.title + newsItem.content;
+                });
+            }
+            
+            return hash;
+        }
+
+        let slideshowCompleted = false; // Flag to track if slideshow has completed
+        let currentMarqueeContentHash = ''; // Track current marquee content hash to prevent unnecessary updates
+        let marqueeLastUpdate = 0; // Track when marquee was last updated
+        let marqueeIsAnimating = false; // Track if marquee is currently animating
+        let marqueeDataRefreshInterval = null; // Track data refresh interval
+        let marqueeCurrentData = null; // Store current marquee data
+        let marqueeScrollPosition = 0; // Track scroll position for JS-based scroll
+        let marqueeScrollSpeed = 1; // pixels per frame (default, will be updated from config)
+        let marqueeScrollInterval = null; // Track scroll interval
+        let slideIntervalDuration = 5000; // milliseconds (default, will be updated from config)
+        let orgChartIntervalDuration = 5000; // milliseconds - separate interval for org chart section (default, will be updated from config)
+        let universityMission = ''; // Default university mission (will be updated from config)
+        let universityVision = ''; // Default university vision (will be updated from config)
+        let collegeMission = 'The College of Computer Studies aims to provide innovative and quality instruction to the advancement of technology, intends to develop an entrepreneurial learning environment towards sustainability  and growth; and develops responsible and morally upright citizens.'; // Default college mission (will be updated from config)
+        let collegeVision = 'We  are  committed  to  provide accessible,  responsive,  and  quality Information Technology Education (ITE) programs and to become the Institution of choice in producing competent and responsible IT professionals  who  are  sensitive to  the needs  and  demands  of the industry.'; // Default college vision (will be updated from config)
+
+        // Function to start JavaScript-based infinite scroll
+        function startMarqueeScroll() {
+            if (marqueeScrollInterval) {
+                clearInterval(marqueeScrollInterval);
+            }
+            
+            marqueeScrollInterval = setInterval(() => {
+                const marqueeContent = document.getElementById('marqueeContent');
+                if (marqueeContent && marqueeContent.classList.contains('animate')) {
+                    marqueeScrollPosition -= marqueeScrollSpeed;
+                    
+                    // Reset position when we've scrolled through one complete set of content
+                    const contentWidth = marqueeContent.scrollWidth / 2; // Half because content is duplicated
+                    if (Math.abs(marqueeScrollPosition) >= contentWidth) {
+                        marqueeScrollPosition = 0;
+                    }
+                    
+                    marqueeContent.style.transform = `translateX(${marqueeScrollPosition}px)`;
+                }
+            }, 16); // ~60fps
+            
+            console.log('JavaScript-based marquee scroll started');
+        }
+
+        // Function to stop marquee scroll
+        function stopMarqueeScroll() {
+            if (marqueeScrollInterval) {
+                clearInterval(marqueeScrollInterval);
+                marqueeScrollInterval = null;
+            }
+        }
+
+        // Separate function to load marquee data silently
+        async function loadMarqueeDataSilently() {
+            try {
+                const res = await fetch(MARQUEE_API_URL);
+                const json = await res.json();
+                if (json.status !== 'success') {
+                    console.error('Failed to load marquee data:', json.message);
+                    return null;
+                }
+                
+                return json.data;
+            } catch (error) {
+                console.error('Error loading marquee data:', error);
+                return null;
+            }
+        }
+
+        // Function to build marquee HTML with duplicated content for seamless loop
+        function buildMarqueeHTML(welcomeAndNews) {
+            let marqueeText = '';
+            
+            // Start with welcome message
+            if (welcomeAndNews && welcomeAndNews.welcome_message) {
+                marqueeText += `<div class="marquee-item">${esc(welcomeAndNews.welcome_message)}</div>`;
+            }
+            
+            // Add news items - with client-side expiration check as additional safety
+            if (welcomeAndNews && welcomeAndNews.news && welcomeAndNews.news.length > 0) {
+                const now = new Date();
+                welcomeAndNews.news.forEach(newsItem => {
+                    // Skip expired items (additional client-side check)
+                    if (newsItem.expires_at) {
+                        const expiresAt = new Date(newsItem.expires_at);
+                        if (expiresAt <= now) {
+                            console.log('Skipping expired marquee item:', newsItem.title, 'expired at', newsItem.expires_at);
+                            return; // Skip this item
+                        }
+                    }
+                    marqueeText += `<span class="marquee-separator">•</span>`;
+                    marqueeText += `<div class="marquee-item">${esc(newsItem.title)}: ${esc(newsItem.content)}</div>`;
+                });
+            }
+            
+            // If no welcome message and no news, add default content
+            if (!welcomeAndNews || 
+                (!welcomeAndNews.welcome_message && (!welcomeAndNews.news || welcomeAndNews.news.length === 0))) {
+                marqueeText = `<div class="marquee-item">Welcome to Smart Bulletin Board - Your Digital Campus Hub!</div>`;
+                marqueeText += `<span class="marquee-separator">•</span>`;
+                marqueeText += `<div class="marquee-item">Stay updated with the latest announcements and events</div>`;
+                marqueeText += `<span class="marquee-separator">•</span>`;
+                marqueeText += `<div class="marquee-item">Check back regularly for important information</div>`;
+            } else if (welcomeAndNews.welcome_message && (!welcomeAndNews.news || welcomeAndNews.news.length === 0)) {
+                // If only welcome message and no news, add some default content
+                marqueeText += `<span class="marquee-separator">•</span>`;
+                marqueeText += `<div class="marquee-item">Stay updated with the latest announcements and events</div>`;
+                marqueeText += `<span class="marquee-separator">•</span>`;
+                marqueeText += `<div class="marquee-item">Check back regularly for important information</div>`;
+            }
+            
+            // Duplicate content for seamless infinite scroll
+            return marqueeText + marqueeText;
+        }
+
+        // Function to update marquee content silently without stopping animation
+        function updateMarqueeContentSilently(newData) {
+            const marqueeContent = document.getElementById('marqueeContent');
+            if (!marqueeContent) return;
+            
+            // Only update if content has actually changed
+            const newContentHash = createContentHash(newData);
+            if (newContentHash === currentMarqueeContentHash) {
+                console.log('Marquee content unchanged, skipping silent update');
+                return;
+            }
+            
+            console.log('Updating marquee content silently');
+            
+            // Build new HTML with duplicated content
+            const newHTML = buildMarqueeHTML(newData);
+            
+            // Update content without stopping animation
+            marqueeContent.innerHTML = newHTML;
+            
+            // Reset scroll position for seamless transition
+            marqueeScrollPosition = 0;
+            marqueeContent.style.transform = `translateX(0px)`;
+            
+            // Update tracking variables
+            currentMarqueeContentHash = newContentHash;
+            marqueeCurrentData = newData;
+            marqueeLastUpdate = Date.now();
+        }
+
+        // Function to initialize marquee with infinite scroll
+        function initializeMarquee(welcomeAndNews) {
+            const marqueeContainer = document.querySelector('.marquee-container');
+            const oldMarqueeContent = document.getElementById('marqueeContent');
+            
+            console.log('Initializing marquee with infinite scroll');
+            
+            // Create new marquee content element
+            const newMarqueeContent = document.createElement('div');
+            newMarqueeContent.className = 'marquee-content transitioning';
+            newMarqueeContent.id = 'marqueeContent';
+            newMarqueeContent.innerHTML = buildMarqueeHTML(welcomeAndNews);
+            
+            // Remove old element and add new one
+            if (oldMarqueeContent) {
+                marqueeContainer.removeChild(oldMarqueeContent);
+            }
+            marqueeContainer.appendChild(newMarqueeContent);
+            
+            // Start infinite animation
+            requestAnimationFrame(() => {
+                newMarqueeContent.classList.add('animate', 'loaded');
+                newMarqueeContent.classList.remove('transitioning');
+                
+                // Track animation state
+                marqueeIsAnimating = true;
+                marqueeCurrentData = welcomeAndNews;
+                currentMarqueeContentHash = createContentHash(welcomeAndNews);
+                marqueeLastUpdate = Date.now();
+                
+                // Start JavaScript-based scroll
+                startMarqueeScroll();
+                
+                console.log('Marquee infinite scroll started');
+            });
+        }
+
+        // Function to start silent data refresh
+        function startMarqueeDataRefresh() {
+            // Clear existing interval
+            if (marqueeDataRefreshInterval) {
+                clearInterval(marqueeDataRefreshInterval);
+            }
+            
+            // Refresh data every 2 minutes silently
+            marqueeDataRefreshInterval = setInterval(async () => {
+                console.log('Silent marquee data refresh');
+                const newData = await loadMarqueeDataSilently();
+                if (newData) {
+                    updateMarqueeContentSilently(newData);
+                }
+            }, 120000); // 2 minutes
+            
+            console.log('Marquee silent data refresh started (every 2 minutes)');
+        }
+
+        // Function to load display configuration
+        async function loadDisplayConfiguration() {
+            try {
+                const configRes = await fetch('/SmartBulletin/api/get_display_config.php');
+                if (configRes.ok) {
+                    const configJson = await configRes.json();
+                    if (configJson.status === 'success') {
+                        const config = configJson.config;
+                        
+                        // Update marquee speed
+                        marqueeScrollSpeed = config.marquee_speed_value || 1.0;
+                        console.log('Marquee speed set to:', config.marquee_speed, '(' + marqueeScrollSpeed + ' px/frame)');
+                        
+                        // Update slide interval
+                        slideIntervalDuration = config.slide_interval_ms || 5000;
+                        console.log('Slide interval set to:', config.slide_interval, 'seconds (' + slideIntervalDuration + ' ms)');
+                        
+                        // Update org chart interval (use same configuration as slide interval)
+                        orgChartIntervalDuration = config.slide_interval_ms || 5000;
+                        console.log('Org chart interval set to:', config.slide_interval, 'seconds (' + orgChartIntervalDuration + ' ms)');
+                        
+                        // Update university mission and vision
+                        if (config.university_mission) {
+                            universityMission = config.university_mission;
+                            console.log('University mission loaded from configuration');
+                        }
+                        if (config.university_vision) {
+                            universityVision = config.university_vision;
+                            console.log('University vision loaded from configuration');
+                        }
+                        
+                        // Update college mission and vision
+                        if (config.college_mission) {
+                            collegeMission = config.college_mission;
+                            console.log('College mission loaded from configuration');
+                        }
+                        if (config.college_vision) {
+                            collegeVision = config.college_vision;
+                            console.log('College vision loaded from configuration');
+                        }
+                        
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading display configuration, using defaults:', error);
+            }
+            return false;
+        }
+
+        async function loadData(){
+            try {
+                // Load display configuration first
+                await loadDisplayConfiguration();
+                
+                const res = await fetch(API_URL);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const json = await res.json();
+                if(json.status !== 'success') {
+                    console.error('API Error:', json);
+                    throw new Error(`Failed to load: ${json.message || 'Unknown error'}`);
+                }
+                const items = json.data;
+            
+            // Load specializations data if available
+            if (json.specializations && json.specializations.length > 0) {
+                facultySpecializationsList = json.specializations;
+                console.log('Loaded specializations data:', facultySpecializationsList.length, 'items');
+            }
+            
+            // Initialize marquee with infinite scroll (force update on initial load)
+            const marqueeData = await loadMarqueeDataSilently();
+            if (marqueeData) {
+                initializeMarquee(marqueeData);
+                startMarqueeDataRefresh();
+            }
+            
+            // Always render hero on first load, or if slideshow has been reset
+            // Only auto-refresh the slideshow if we haven't started yet, or if it has completed
+            const isInitialLoad = originalSlides.length === 0;
+            const hasCompletedSuccessfully = slideshowCompleted;
+            
+            if (isInitialLoad || hasCompletedSuccessfully) {
+                renderHero(items);
+            } else {
+                // Update originalSlides with fresh data for when we return using interleaving logic
+                const mediaItems = items.filter(i => i.file_path);
+                const announcementItems = items.filter(i => i.type === 'announcements' && !i.file_path);
+                const eventItems = items.filter(i => i.type === 'events' && !i.file_path);
+                const groupedAnnouncements = items.filter(i => i.type === 'announcements_group')
+                    .flatMap(g => g.announcements || [])
+                    .filter(a => !a.file_path);
+                
+                // Use the same interleaving logic as renderHero
+                const freshSlides = [];
+                freshSlides.push(...mediaItems);
+                
+                const allAnnouncements = [...announcementItems, ...groupedAnnouncements];
+                const maxLength = Math.max(allAnnouncements.length, eventItems.length);
+                
+                // Ensure events are always included by prioritizing them
+                for (let i = 0; i < maxLength; i++) {
+                    // Add event first if available (to ensure events are always visible)
+                    if (i < eventItems.length) {
+                        freshSlides.push(eventItems[i]);
+                    }
+                    // Add announcement if available
+                    if (i < allAnnouncements.length) {
+                        freshSlides.push(allAnnouncements[i]);
+                    }
+                }
+                
+                originalSlides = freshSlides;
+            }
+            renderLists(items);
+            renderFacultyOfficers(items);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Show error message to user
+                const heroSection = document.querySelector('.hero-section');
+                if (heroSection) {
+                    heroSection.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: white; text-align: center; padding: 2rem;">
+                            <h2 style="font-size: 2rem; margin-bottom: 1rem;">⚠️ Unable to Load Data</h2>
+                            <p style="font-size: 1.2rem; margin-bottom: 1rem;">${error.message}</p>
+                            <p style="font-size: 1rem; opacity: 0.8;">Please check the console for more details or contact the administrator.</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        loadData();
+        // Reduced auto-reload interval to give slideshow more time, but only refresh after completion
+        setInterval(loadData, 300000); // 5 minutes instead of 1 minute
+
+        // Theme Management System
+        let currentTheme = '';
+        let themeCheckInterval = null;
+        let themeCSSLink = null;
+
+        function loadThemeCSS(themeName) {
+            // Remove existing theme CSS
+            if (themeCSSLink) {
+                themeCSSLink.remove();
+                themeCSSLink = null;
+            }
+            
+            // Load new theme CSS if theme is not default
+            if (themeName && themeName !== '') {
+                themeCSSLink = document.createElement('link');
+                themeCSSLink.rel = 'stylesheet';
+                themeCSSLink.href = `../css/themes/${themeName.replace('theme-', '')}.css`;
+                themeCSSLink.id = 'theme-css';
+                document.head.appendChild(themeCSSLink);
+                console.log('Loaded theme CSS:', themeCSSLink.href);
+            }
+        }
+
+        async function loadTheme() {
+            try {
+                // Get theme parameter from URL if it exists
+                const urlParams = new URLSearchParams(window.location.search);
+                const themeParam = urlParams.get('theme');
+                
+                // Build API URL with theme parameter if present
+                let apiUrl = '../api/get_theme.php';
+                if (themeParam) {
+                    apiUrl += '?theme=' + encodeURIComponent(themeParam);
+                }
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const newTheme = data.theme_class || '';
+                    
+                    // Only apply theme if it has changed
+                    if (newTheme !== currentTheme) {
+                        console.log('Theme changed from', currentTheme, 'to', newTheme);
+                        
+                        // Remove old theme class
+                        if (currentTheme) {
+                            document.body.classList.remove(currentTheme);
+                        }
+                        
+                        // Apply new theme class
+                        if (newTheme) {
+                            document.body.classList.add(newTheme);
+                        }
+                        
+                        // Load/unload theme CSS
+                        loadThemeCSS(newTheme);
+                        
+                        currentTheme = newTheme;
+                        
+                        // Log theme application
+                        if (newTheme) {
+                            console.log('Applied theme:', newTheme);
+                        } else {
+                            console.log('Applied default theme (no theme class)');
+                        }
+                    }
+                } else {
+                    console.warn('Failed to load theme:', data.message);
+                }
+            } catch (error) {
+                console.error('Error loading theme:', error);
+            }
+        }
+
+        // Load theme on page load
+        loadTheme();
+
+        // Check for theme changes every 5 minutes
+        themeCheckInterval = setInterval(loadTheme, 300000);
+
+        // Manual theme override function (for testing)
+        async function setThemeOverride(themeName) {
+            try {
+                // Build API URL with theme parameter
+                let apiUrl = '../api/get_theme.php';
+                if (themeName) {
+                    apiUrl += '?theme=' + encodeURIComponent(themeName);
+                }
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const newTheme = data.theme_class || '';
+                    
+                    // Remove old theme class
+                    if (currentTheme) {
+                        document.body.classList.remove(currentTheme);
+                    }
+                    
+                    // Apply new theme class
+                    if (newTheme) {
+                        document.body.classList.add(newTheme);
+                    }
+                    
+                    // Load/unload theme CSS
+                    loadThemeCSS(newTheme);
+                    
+                    currentTheme = newTheme;
+                    
+                    // Log theme application
+                    if (newTheme) {
+                        console.log('Applied theme override:', newTheme);
+                    } else {
+                        console.log('Applied default theme (override)');
+                    }
+                } else {
+                    console.warn('Failed to apply theme override:', data.message);
+                }
+            } catch (error) {
+                console.error('Error applying theme override:', error);
+            }
+        }
+
+        // Expose theme functions globally for debugging/testing
+        window.setThemeOverride = setThemeOverride;
+        window.loadTheme = loadTheme;
+        window.getCurrentTheme = () => currentTheme;
+        
+        // Update specializations panel position on resize and zoom
+        window.addEventListener('resize', updateSpecializationsPanelPosition);
+        
+        // Handle marquee resize events - simplified for infinite scroll
+        window.addEventListener('resize', () => {
+            const marqueeContent = document.getElementById('marqueeContent');
+            if (marqueeContent && marqueeContent.classList.contains('animate')) {
+                // Infinite scroll doesn't need duration recalculation
+                console.log('Marquee resize: Maintaining infinite scroll animation');
+            }
+        });
+        
+        // Update specializations panel position when center panel changes
+        const centerPanel = document.querySelector('.center');
+        if (centerPanel) {
+            const observer = new MutationObserver(() => {
+                setTimeout(updateSpecializationsPanelPosition, 50);
+            });
+            observer.observe(centerPanel, { 
+                attributes: true, 
+                attributeFilter: ['class', 'style'],
+                childList: true,
+                subtree: true
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,327 @@
+/* Valentine's Theme Styles */
+.theme-valentines {
+    --primary-color: #DC143C; /* Crimson Red */
+    --secondary-color: #FF69B4; /* Hot Pink */
+    --accent-color: #FFB6C1; /* Light Pink */
+    --background-gradient: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFE4E1 100%);
+    --hearts-effect: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 85 C20 60, 20 30, 50 30 C80 30, 80 60, 50 85 Z' fill='rgba(255,182,193,0.3)'/%3E%3Cpath d='M30 70 C10 50, 10 25, 30 25 C50 25, 50 50, 30 70 Z' fill='rgba(255,105,180,0.2)'/%3E%3Cpath d='M70 70 C90 50, 90 25, 70 25 C50 25, 50 50, 70 70 Z' fill='rgba(255,105,180,0.2)'/%3E%3C/svg%3E");
+}
+
+.theme-valentines body {
+    background: var(--background-gradient);
+    position: relative;
+}
+
+.theme-valentines body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--hearts-effect);
+    background-size: 200px 200px;
+    animation: hearts-float 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes hearts-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+    25% { transform: translateY(-10px) rotate(2deg); opacity: 0.4; }
+    50% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+    75% { transform: translateY(10px) rotate(-2deg); opacity: 0.4; }
+}
+
+.theme-valentines .screen {
+    position: relative;
+    z-index: 2;
+}
+
+.theme-valentines .topbar {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.9), rgba(255, 105, 180, 0.9));
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 8px 40px rgba(255, 105, 180, 0.3), 
+                0 0 20px rgba(255, 182, 193, 0.2),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.theme-valentines .topbar::before {
+    content: '💕';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 2em;
+    animation: heart-beat 2s ease-in-out infinite;
+}
+
+.theme-valentines .topbar::after {
+    content: '💖';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2em;
+    animation: heart-beat 2s ease-in-out infinite reverse;
+}
+
+@keyframes heart-beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.theme-valentines .time-top,
+.theme-valentines .time-bottom {
+    color: var(--accent-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+                 0 0 10px rgba(255, 182, 193, 0.6);
+}
+
+.theme-valentines .panel {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.08), rgba(255, 105, 180, 0.08));
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2),
+                0 0 15px rgba(255, 182, 193, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.theme-valentines .panel:hover {
+    box-shadow: 0 12px 40px rgba(255, 105, 180, 0.3),
+                0 0 20px rgba(255, 182, 193, 0.2);
+    transform: translateY(-3px);
+}
+
+.theme-valentines .section-title,
+.theme-valentines .hierarchy-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--accent-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-valentines .section-title::before,
+.theme-valentines .hierarchy-header::before {
+    content: '💝';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: gift-shake 3s ease-in-out infinite;
+}
+
+.theme-valentines .section-title::after,
+.theme-valentines .hierarchy-header::after {
+    content: '🌹';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: rose-sway 2s ease-in-out infinite;
+}
+
+@keyframes gift-shake {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    25% { transform: translateY(-50%) rotate(5deg); }
+    75% { transform: translateY(-50%) rotate(-5deg); }
+}
+
+@keyframes rose-sway {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    50% { transform: translateY(-50%) rotate(10deg); }
+}
+
+.theme-valentines .list-item {
+    border-left: 4px solid var(--accent-color);
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.05), rgba(220, 20, 60, 0.05));
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+}
+
+.theme-valentines .list-item:hover {
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(220, 20, 60, 0.1));
+    border-color: var(--accent-color);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.2),
+                0 0 10px rgba(255, 182, 193, 0.3);
+    transform: translateY(-3px);
+}
+
+.theme-valentines .list-item .title {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.theme-valentines .hierarchy-item {
+    border: 1px solid rgba(255, 182, 193, 0.2);
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.05), rgba(255, 182, 193, 0.05));
+}
+
+.theme-valentines .hierarchy-item:hover {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(255, 182, 193, 0.1));
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+    transform: translateX(8px);
+}
+
+.theme-valentines .hierarchy-item img {
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.theme-valentines .hierarchy-item .name {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.theme-valentines .hierarchy-item .specialization {
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(255, 105, 180, 0.1));
+    border-left: 4px solid var(--accent-color);
+    color: var(--primary-color);
+}
+
+.theme-valentines .marquee-container {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.8), rgba(255, 105, 180, 0.8));
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.3),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 5;
+}
+
+.theme-valentines .marquee-content {
+    color: var(--accent-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.theme-valentines .marquee-separator {
+    color: rgba(255, 182, 193, 0.8);
+    text-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+}
+
+/* Logo Enhancement for Valentine's Theme */
+.theme-valentines .logos-section {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 10px 15px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 182, 193, 0.4);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.2),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.theme-valentines .header-logo {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))
+            drop-shadow(0 0 10px rgba(255, 182, 193, 0.4));
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.theme-valentines .header-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3))
+            drop-shadow(0 0 15px rgba(255, 182, 193, 0.6));
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Calendar Valentine's Theme */
+.theme-valentines .calendar-container {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.08), rgba(255, 105, 180, 0.08));
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+}
+
+.theme-valentines .calendar-container .header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--accent-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.theme-valentines .calendar-container .button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.theme-valentines .calendar-container .button:hover {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+}
+
+.theme-valentines .calendar-container .calendar-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--accent-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.theme-valentines .calendar-container .calendar-day {
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.05), rgba(220, 20, 60, 0.05));
+    border: 1px solid rgba(255, 182, 193, 0.3);
+}
+
+.theme-valentines .calendar-container .calendar-day:hover {
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(220, 20, 60, 0.1));
+    border-color: var(--accent-color);
+}
+
+.theme-valentines .calendar-container .event {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(255, 182, 193, 0.1));
+    border: 1px solid rgba(255, 105, 180, 0.3);
+    color: var(--primary-color);
+}
+
+.theme-valentines .calendar-container .event:hover {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(255, 182, 193, 0.2));
+    border-color: var(--accent-color);
+}
+
+/* Responsive Valentine's Theme */
+@media (max-width: 768px) {
+    .theme-valentines .topbar::before,
+    .theme-valentines .topbar::after {
+        font-size: 1.5em;
+    }
+    
+    .theme-valentines .section-title::before,
+    .theme-valentines .section-title::after,
+    .theme-valentines .hierarchy-header::before,
+    .theme-valentines .hierarchy-header::after {
+        font-size: 0.8em;
+    }
+    
+    /* Mobile logo adjustments */
+    .theme-valentines .logos-section {
+        padding: 8px 12px;
+        border-radius: 12px;
+    }
+    
+    .theme-valentines .header-logo {
+        padding: 3px;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Small mobile adjustments */
+    .theme-valentines .logos-section {
+        padding: 6px 10px;
+        border-radius: 10px;
+    }
+    
+    .theme-valentines .header-logo {
+        padding: 2px;
+        border-radius: 4px;
+    }
+    
+    .theme-valentines .topbar::before,
+    .theme-valentines .topbar::after {
+        font-size: 1.2em;
+    }
+}
