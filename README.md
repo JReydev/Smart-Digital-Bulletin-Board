@@ -60,3 +60,14 @@ Smart Digital Bulletin Board is a PHP-based bulletin board system for the Colleg
 ## License
 
 Add a license here if desired.
+
+
+<img width="1919" height="943" alt="image" src="https://github.com/user-attachments/assets/98110ae3-9bb3-42f2-af22-5f292fa4d7d7" />
+<img width="1919" height="943" alt="image" src="https://github.com/user-attachments/assets/78d081fe-ba42-4332-855f-e5fa71166487" />
+<img width="1919" height="943" alt="image" src="https://github.com/user-attachments/assets/c763b80e-d91f-41a6-954b-de7d46d3ad83" />
+<img width="1919" height="949" alt="image" src="https://github.com/user-attachments/assets/bbff820d-0e90-498d-83df-7d2668f8a01b" />
+<img width="1919" height="953" alt="image" src="https://github.com/user-attachments/assets/33f2b0c1-228e-45a8-97be-7e9af94de402" />
+
+
+
+
